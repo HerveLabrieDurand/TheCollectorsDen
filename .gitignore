@@ -33,4 +33,5 @@ TheCollectorsDenAPI/!**/src/test/**/build/
 ### VS Code ###
 TheCollectorsDenAPI/.vscode/
 
+/Documentation/
 /.idea/
