@@ -1,5 +1,6 @@
 package com.collectorsden.demo.model;
 
+import com.collectorsden.demo.model.enums.product.ProductStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -60,5 +61,6 @@ public class Product {
     private LocalDateTime updatedAt;
 
     @Column(name = "status")
-    private String status = "available";
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
 }

@@ -1,5 +1,7 @@
 package com.collectorsden.demo.model;
 
+import com.collectorsden.demo.model.enums.payment.PaymentMethod;
+import com.collectorsden.demo.model.enums.payment.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,10 +30,12 @@ public class Payment {
     private BigDecimal amount;
 
     @Column(name = "payment_method")
-    private String paymentMethod;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
     @Column(name = "status")
-    private String status = "pending";
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -1,6 +1,9 @@
 -------------------------------------------------------------------
 -- 1) Users
 -------------------------------------------------------------------
+CREATE TYPE user_status AS ENUM('ACTIVE','SUSPENDED','INACTIVE');
+CREATE TYPE user_role AS ENUM('ADMIN','USER');
+
 CREATE TABLE users
 (
     user_id             INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -12,10 +15,10 @@ CREATE TABLE users
     city                VARCHAR(100),
     postal_code         VARCHAR(20),
     profile_picture_url VARCHAR(255),
-    role                VARCHAR(50) DEFAULT 'buyer',
+    role                user_role DEFAULT 'USER',
     created_at          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     updated_at          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-    status              VARCHAR(50) DEFAULT 'active',
+    status              user_status DEFAULT 'ACTIVE',
     phone_number        VARCHAR(20),
     preferences         TEXT, -- JSON String
     last_login          TIMESTAMP
@@ -25,17 +28,19 @@ CREATE TABLE users
 -------------------------------------------------------------------
 -- 2) Orders
 -------------------------------------------------------------------
+CREATE TYPE order_status AS ENUM('PENDING','SHIPPED','DELIVERED','CANCELED');
+
 CREATE TABLE orders
 (
     order_id    INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    buyer_id    INT            NOT NULL,       -- link to users (buyer)
-    seller_id   INT            NOT NULL,       -- link to users (seller)
+    buyer_id    INT            NOT NULL,
+    seller_id   INT            NOT NULL,
     total_price DECIMAL(10, 2) NOT NULL,       -- total cost (product + shipping)
     address     VARCHAR(255),                  -- shipping address
     city        VARCHAR(100),
     postal_code VARCHAR(20),
     country     VARCHAR(100),
-    status      VARCHAR(50) DEFAULT 'pending', -- (pending, shipped, delivered, canceled)
+    status      order_status DEFAULT 'PENDING',
     created_at  TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (buyer_id) REFERENCES users (user_id),
@@ -46,6 +51,8 @@ CREATE TABLE orders
 -------------------------------------------------------------------
 -- 3) Products
 -------------------------------------------------------------------
+CREATE TYPE product_status AS ENUM('AVAILABLE','SOLD','WITHDRAWN');
+
 CREATE TABLE products
 (
     product_id     INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -53,12 +60,11 @@ CREATE TABLE products
     order_id       INT,
     name           VARCHAR(255) NOT NULL,
     description    TEXT,
-    category       VARCHAR(100),
-    starting_price DECIMAL(10, 2),                  -- initial bid price
-    buy_now_price  DECIMAL(10, 2),                  -- instant purchase price
+    starting_price DECIMAL(10, 2),
+    buy_now_price  DECIMAL(10, 2),
     created_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     updated_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-    status         VARCHAR(50) DEFAULT 'available', -- (available, sold, withdrawn),
+    status         product_status DEFAULT 'AVAILABLE',
     FOREIGN KEY (vendor_id) REFERENCES users (user_id) ON DELETE CASCADE,
     FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
@@ -91,7 +97,7 @@ CREATE TABLE products_category
 CREATE TABLE bids
 (
     bid_id     INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    product_id INT            NOT NULL, -- Associated product
+    product_id INT            NOT NULL,
     user_id    INT            NOT NULL, -- Bidder
     bid_amount DECIMAL(10, 2) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -105,8 +111,8 @@ CREATE TABLE bids
 CREATE TABLE reviews
 (
     review_id        INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    reviewer_id      INT NOT NULL, -- who leaves the review
-    reviewed_user_id INT NOT NULL, -- who is being reviewed
+    reviewer_id      INT NOT NULL,
+    reviewed_user_id INT NOT NULL,
     rating           INT CHECK (rating BETWEEN 1 AND 5),
     comment          TEXT,
     created_at       TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -118,13 +124,16 @@ CREATE TABLE reviews
 -------------------------------------------------------------------
 -- 8) Payments
 -------------------------------------------------------------------
+CREATE TYPE payment_method AS ENUM('CREDIT_CARD','PAYPAL');
+CREATE TYPE payment_status AS ENUM('COMPLETED','PENDING','FAILED');
+
 CREATE TABLE payments
 (
     payment_id     INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    order_id       INT            NOT NULL,         -- linked order
+    order_id       INT            NOT NULL,
     amount         DECIMAL(10, 2) NOT NULL,
-    payment_method VARCHAR(50),                     -- (credit_card, PayPal, etc.)
-    status         VARCHAR(50) DEFAULT 'completed', -- (completed, failed, pending)
+    payment_method payment_method NOT NULL,
+    status         payment_status DEFAULT 'PENDING',
     created_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES orders (order_id),
     UNIQUE (order_id)

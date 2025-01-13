@@ -1,5 +1,6 @@
 package com.collectorsden.demo.model;
 
+import com.collectorsden.demo.model.enums.order.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -49,7 +50,8 @@ public class Order {
     private String country;
 
     @Column(name = "status")
-    private String status = "pending";
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
