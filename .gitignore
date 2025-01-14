@@ -35,3 +35,4 @@ TheCollectorsDenAPI/.vscode/
 
 /Documentation/
 /.idea/
+TheCollectorsDenAPI/src/main/resources/secrets.properties
