@@ -1,9 +1,6 @@
 -------------------------------------------------------------------
 -- 1) Users
 -------------------------------------------------------------------
-CREATE TYPE user_status AS ENUM('ACTIVE','SUSPENDED','INACTIVE');
-CREATE TYPE user_role AS ENUM('ADMIN','USER');
-
 CREATE TABLE users
 (
     user_id             INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -15,10 +12,10 @@ CREATE TABLE users
     city                VARCHAR(100),
     postal_code         VARCHAR(20),
     profile_picture_url VARCHAR(255),
-    role                user_role DEFAULT 'USER',
+    role                VARCHAR(50) DEFAULT 'USER',
     created_at          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     updated_at          TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-    status              user_status DEFAULT 'ACTIVE',
+    status              VARCHAR(50) DEFAULT 'ACTIVE',
     phone_number        VARCHAR(20),
     preferences         TEXT, -- JSON String
     last_login          TIMESTAMP
@@ -28,8 +25,6 @@ CREATE TABLE users
 -------------------------------------------------------------------
 -- 2) Orders
 -------------------------------------------------------------------
-CREATE TYPE order_status AS ENUM('PENDING','SHIPPED','DELIVERED','CANCELED');
-
 CREATE TABLE orders
 (
     order_id    INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -40,7 +35,7 @@ CREATE TABLE orders
     city        VARCHAR(100),
     postal_code VARCHAR(20),
     country     VARCHAR(100),
-    status      order_status DEFAULT 'PENDING',
+    status      VARCHAR(50) DEFAULT 'PENDING',
     created_at  TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     updated_at  TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (buyer_id) REFERENCES users (user_id),
@@ -51,8 +46,6 @@ CREATE TABLE orders
 -------------------------------------------------------------------
 -- 3) Products
 -------------------------------------------------------------------
-CREATE TYPE product_status AS ENUM('AVAILABLE','SOLD','WITHDRAWN');
-
 CREATE TABLE products
 (
     product_id     INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -64,7 +57,7 @@ CREATE TABLE products
     buy_now_price  DECIMAL(10, 2),
     created_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     updated_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
-    status         product_status DEFAULT 'AVAILABLE',
+    status         VARCHAR(50) DEFAULT 'AVAILABLE',
     FOREIGN KEY (vendor_id) REFERENCES users (user_id) ON DELETE CASCADE,
     FOREIGN KEY (order_id) REFERENCES orders (order_id)
 );
@@ -124,16 +117,13 @@ CREATE TABLE reviews
 -------------------------------------------------------------------
 -- 8) Payments
 -------------------------------------------------------------------
-CREATE TYPE payment_method AS ENUM('CREDIT_CARD','PAYPAL');
-CREATE TYPE payment_status AS ENUM('COMPLETED','PENDING','FAILED');
-
 CREATE TABLE payments
 (
     payment_id     INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     order_id       INT            NOT NULL,
     amount         DECIMAL(10, 2) NOT NULL,
-    payment_method payment_method NOT NULL,
-    status         payment_status DEFAULT 'PENDING',
+    payment_method VARCHAR(50)    NOT NULL,
+    status         VARCHAR(50)    NOT NULL,
     created_at     TIMESTAMP   DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (order_id) REFERENCES orders (order_id),
     UNIQUE (order_id)
