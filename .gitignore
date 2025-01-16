@@ -36,3 +36,36 @@ TheCollectorsDenAPI/.vscode/
 /Documentation/
 /.idea/
 TheCollectorsDenAPI/src/main/resources/secrets.properties
+
+############# FRONTEND ANGULAR (TheCollectorsDenPortal)
+### Generated files ###
+TheCollectorsDenPortal/node_modules/
+TheCollectorsDenPortal/dist/
+TheCollectorsDenPortal/out-tsc/
+TheCollectorsDenPortal/.angular/cache/
+TheCollectorsDenPortal/.angular/tsconfig.*
+
+### Environment files ###
+TheCollectorsDenPortal/src/environments/*.ts
+
+### IDEs and Editor-specific ###
+TheCollectorsDenPortal/.idea/
+TheCollectorsDenPortal/.vscode/
+TheCollectorsDenPortal/*.code-workspace
+
+### Logs ###
+TheCollectorsDenPortal/npm-debug.log*
+TheCollectorsDenPortal/yarn-debug.log*
+TheCollectorsDenPortal/yarn-error.log*
+
+### OS-specific ###
+TheCollectorsDenPortal.DS_Store
+TheCollectorsDenPortal/Thumbs.db
+
+### Temporary Files ###
+TheCollectorsDenPortal/.temp/
+TheCollectorsDenPortal/.sass-cache/
+TheCollectorsDenPortal/.npm/
+
+### Coverage ###
+TheCollectorsDenPortal/coverage/
