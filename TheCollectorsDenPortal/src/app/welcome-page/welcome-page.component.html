@@ -1,0 +1,18 @@
+<div class="h-screen bg-light-background dark:bg-dark-background text-center">
+  <app-header [showAuthBtns]="true" [showTitle]="true"></app-header>
+
+  <a href="/"></a>
+  <div>
+    <h1
+      class="font-bold font-dynapuf text-8xl text-light-title dark:text-dark-title w-4/5 pt-[20vh] m-auto"
+    >
+      {{ "welcome.title" | translate }}
+    </h1>
+    <h1
+      class="text-3xl font-bold font-dynapuf text-light-text dark:text-dark-text w-4/5 pt-[2vh] m-auto"
+    >
+      {{ "welcome.subtitle" | translate }}
+    </h1>
+  </div>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,12 @@
+.content-outer-container {
+  min-height: 100%;
+}
+
+.content-inner-container {
+  padding-bottom: 64px;
+}
+
+.footer-container {
+  height: 64px;
+  margin-top: -64px;
+}

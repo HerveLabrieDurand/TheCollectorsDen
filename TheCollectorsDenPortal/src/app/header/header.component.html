@@ -1,0 +1,36 @@
+<div
+  class="flex font-dynapuf items-center bg-light-background dark:bg-dark-background py-4 px-6 border-0"
+>
+  <div *ngIf="showTitle" class="flex flex-row items-center ml-10 gap-4">
+    <a routerLink="/">
+      <img
+        src="/img/logo.svg"
+        alt="TheCollectorsDenLogo"
+        class="w-16 h-16 lg:w-20 lg:h-20 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28"
+      />
+    </a>
+    <h1 class="text-4xl font-bold text-light-title dark:text-dark-title">
+      The Collectors Den
+    </h1>
+  </div>
+
+  <div
+    class="flex space-x-4 ml-auto items-center text-light-title dark:text-dark-title"
+  >
+    <div *ngIf="showAuthBtns">
+      <button
+        class="px-4 py-2 rounded-lg focus:outline-none"
+        routerLink="login"
+      >
+        {{ "header.signin" | translate }}
+      </button>
+      <button
+        class="bg-light-highlight-cta dark:bg-dark-highlight-cta text-dark-title px-4 py-2 rounded-lg focus:outline-none"
+        routerLink="register"
+      >
+        {{ "header.signup" | translate }}
+      </button>
+    </div>
+    <app-settings></app-settings>
+  </div>
+</div>

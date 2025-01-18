@@ -1,0 +1,52 @@
+<div class="h-screen bg-light-background dark:bg-dark-background font-dynapuf">
+  <app-header [showAuthBtns]="false" [showTitle]="false"></app-header>
+
+  <div class="flex flex-col justify-center items-center">
+    <a routerLink="/">
+      <img
+        src="/img/logo.svg"
+        alt="TheCollectorsDenLogo"
+        class="w-16 h-16 lg:w-20 lg:h-20 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28"
+      />
+    </a>
+    <h1 class="text-light-title dark:text-dark-title text-2xl">
+      {{ "login.title" | translate }}
+    </h1>
+
+    <form
+      class="border border-light-border dark:border-dark-border flex flex-col bg-light-container dark:bg-dark-container rounded-lg w-[26rem] p-6 mt-6 text-light-title dark:text-dark-title"
+    >
+      <h2>{{ "login.email.input.label" | translate }}</h2>
+      <input
+        type="text"
+        class="border border-light-border dark:border-dark-border focus:outline-none focus:ring focus:border-light-highlight-blue rounded-md bg-light-background dark:bg-dark-background px-2 py-1 mt-2"
+      />
+
+      <h2 class="mt-6">{{ "login.password.input.label" | translate }}</h2>
+      <input
+        type="password"
+        class="border border-light-border dark:border-dark-border focus:outline-none focus:ring focus:border-light-highlight-blue rounded-md bg-light-background dark:bg-dark-background px-2 py-1 mt-2"
+      />
+
+      <button
+        class="text-white mt-6 bg-light-highlight-cta dark:bg-dark-highlight-cta rounded-lg p-2"
+      >
+        {{ "login.submit" | translate }}
+      </button>
+    </form>
+
+    <div
+      class="flex flex-col text-center items-center w-[26rem] border border-light-border dark:border-dark-border rounded-lg bg-light-background dark:bg-dark-background text-black dark:text-white p-6 mt-6"
+    >
+      <h2>
+        {{ "login.new.user" | translate }}
+        <a
+          class="underline text-light-highlight-blue hover:text-blue-800"
+          routerLink="/register"
+        >
+          {{ "login.create.account" | translate }}
+        </a>
+      </h2>
+    </div>
+  </div>
+</div>

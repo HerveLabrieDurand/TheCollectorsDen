@@ -1,0 +1,24 @@
+<!-- Menu Trigger Button -->
+<button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Settings menu">
+  <ng-icon
+    name="matSettingsOutline"
+    class="scale-[1.4] text-light-title dark:text-dark-title"
+  ></ng-icon>
+</button>
+
+<!-- Mat Menu -->
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="toggleTheme()">
+    <mat-icon>brightness_6</mat-icon>
+    <span>Toggle Theme</span>
+  </button>
+  <button mat-menu-item (click)="toggleLocale()">
+    <mat-icon>translate</mat-icon>
+    <span *ngIf="getLang() === 'en'">{{
+      "header.settings.language.french" | translate
+    }}</span>
+    <span *ngIf="getLang() === 'fr'">{{
+      "header.settings.language.english" | translate
+    }}</span>
+  </button>
+</mat-menu>

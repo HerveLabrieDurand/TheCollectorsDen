@@ -1,1 +1,17 @@
-{}
+{
+  "header.signin": "Se connecter",
+  "header.signup": "S'inscrire",
+
+  "header.settings.language.english": "Anglais",
+  "header.settings.language.french": "Français",
+
+  "login.create.account": "Créer un compte",
+  "login.email.input.label": "Adresse e-mail",
+  "login.new.user": "Vous êtes nouveau sur The Collectors Den ?",
+  "login.password.input.label": "Mot de passe",
+  "login.title": "Connectez-vous à The Collectors Den",
+  "login.submit": "Se Connecter",
+
+  "welcome.title": "Un paradis pour les collectionneurs vous attend!",
+  "welcome.subtitle": "The Collectors Den est votre marché de confiance pour des trésors rares et des objets de collection du quotidien"
+}

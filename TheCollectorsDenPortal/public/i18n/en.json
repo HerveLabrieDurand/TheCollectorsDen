@@ -1,3 +1,17 @@
 {
-  "test": "HI THERE"
+  "header.signin": "Sign In",
+  "header.signup": "Sign Up",
+
+  "header.settings.language.english": "English",
+  "header.settings.language.french": "French",
+
+  "login.create.account": "Create an account",
+  "login.email.input.label": "Email address",
+  "login.new.user": "New to The Collectors Den ?",
+  "login.password.input.label": "Password",
+  "login.title": "Sign in to The Collectors Den",
+  "login.submit": "Sign In",
+
+  "welcome.title": "A Collector’s Paradise Awaits - Discover, Trade, and Treasure!",
+  "welcome.subtitle": "The Collectors Den is your Trusted Marketplace for Rare Treasures and Everyday Collectibles"
 }
