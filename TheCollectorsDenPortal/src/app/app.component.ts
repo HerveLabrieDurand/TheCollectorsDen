@@ -5,12 +5,11 @@ import { TranslateService } from '@ngx-translate/core';
 import translationsEN from '../../public/i18n/en.json';
 import translationsFR from '../../public/i18n/fr.json';
 import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FooterComponent, HeaderComponent], // add TranslateDirective if needed
+  imports: [RouterOutlet, FooterComponent], // add TranslateDirective if needed
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

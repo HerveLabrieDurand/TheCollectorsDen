@@ -1,47 +1,47 @@
-<div class="h-screen bg-light-background dark:bg-dark-background font-dynapuf">
+<div class="h-screen bg-light-background font-dynapuf dark:bg-dark-background">
   <app-header [showAuthBtns]="false" [showTitle]="false"></app-header>
 
-  <div class="flex flex-col justify-center items-center">
+  <div class="flex flex-col items-center justify-center">
     <a routerLink="/">
       <img
         src="/img/logo.svg"
         alt="TheCollectorsDenLogo"
-        class="w-16 h-16 lg:w-20 lg:h-20 xl:w-24 xl:h-24 2xl:w-28 2xl:h-28"
+        class="h-16 w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28"
       />
     </a>
-    <h1 class="text-light-title dark:text-dark-title text-2xl">
+    <h1 class="text-2xl text-light-title dark:text-dark-title">
       {{ "login.title" | translate }}
     </h1>
 
     <form
-      class="border border-light-border dark:border-dark-border flex flex-col bg-light-container dark:bg-dark-container rounded-lg w-[26rem] p-6 mt-6 text-light-title dark:text-dark-title"
+      class="mt-6 flex w-[26rem] flex-col rounded-lg border border-light-border bg-light-container p-6 text-light-title dark:border-dark-border dark:bg-dark-container dark:text-dark-title"
     >
       <h2>{{ "login.email.input.label" | translate }}</h2>
       <input
         type="text"
-        class="border border-light-border dark:border-dark-border focus:outline-none focus:ring focus:border-light-highlight-blue rounded-md bg-light-background dark:bg-dark-background px-2 py-1 mt-2"
+        class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
       />
 
       <h2 class="mt-6">{{ "login.password.input.label" | translate }}</h2>
       <input
         type="password"
-        class="border border-light-border dark:border-dark-border focus:outline-none focus:ring focus:border-light-highlight-blue rounded-md bg-light-background dark:bg-dark-background px-2 py-1 mt-2"
+        class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
       />
 
       <button
-        class="text-white mt-6 bg-light-highlight-cta dark:bg-dark-highlight-cta rounded-lg p-2"
+        class="mt-6 rounded-lg bg-light-highlight-cta p-2 text-white dark:bg-dark-highlight-cta"
       >
         {{ "login.submit" | translate }}
       </button>
     </form>
 
     <div
-      class="flex flex-col text-center items-center w-[26rem] border border-light-border dark:border-dark-border rounded-lg bg-light-background dark:bg-dark-background text-black dark:text-white p-6 mt-6"
+      class="mt-6 flex w-[26rem] flex-col items-center rounded-lg border border-light-border bg-light-background p-6 text-center text-black dark:border-dark-border dark:bg-dark-background dark:text-white"
     >
       <h2>
         {{ "login.new.user" | translate }}
         <a
-          class="underline text-light-highlight-blue hover:text-blue-800"
+          class="hover:text-blue-800 text-light-highlight-blue underline"
           routerLink="/register"
         >
           {{ "login.create.account" | translate }}
