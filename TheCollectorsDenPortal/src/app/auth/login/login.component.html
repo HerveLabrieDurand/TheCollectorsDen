@@ -3,18 +3,14 @@
 
   <div class="flex flex-col items-center justify-center">
     <a routerLink="/">
-      <img
-        src="/img/logo.svg"
-        alt="TheCollectorsDenLogo"
-        class="h-16 w-16 lg:h-20 lg:w-20 xl:h-24 xl:w-24 2xl:h-28 2xl:w-28"
-      />
+      <img src="/img/logo.svg" alt="TheCollectorsDenLogo" class="h-28 w-28" />
     </a>
-    <h1 class="text-2xl text-light-title dark:text-dark-title">
+    <h1 class="text-2xl text-light-text dark:text-dark-text">
       {{ "login.title" | translate }}
     </h1>
 
     <form
-      class="mt-6 flex w-[26rem] flex-col rounded-lg border border-light-border bg-light-container p-6 text-light-title dark:border-dark-border dark:bg-dark-container dark:text-dark-title"
+      class="mt-6 flex w-[26rem] flex-col rounded-lg border border-light-border bg-light-container p-6 text-light-text dark:border-dark-border dark:bg-dark-container dark:text-dark-text"
     >
       <h2>{{ "login.email.input.label" | translate }}</h2>
       <input
@@ -29,7 +25,7 @@
       />
 
       <button
-        class="mt-6 rounded-lg bg-light-highlight-cta p-2 text-white dark:bg-dark-highlight-cta"
+        class="bg-light-primary dark:bg-dark-primary mt-6 rounded-lg p-2 text-white"
       >
         {{ "login.submit" | translate }}
       </button>
@@ -41,7 +37,7 @@
       <h2>
         {{ "login.new.user" | translate }}
         <a
-          class="hover:text-blue-800 text-light-highlight-blue underline"
+          class="text-light-primary dark:text-dark-primary underline"
           routerLink="/register"
         >
           {{ "login.create.account" | translate }}

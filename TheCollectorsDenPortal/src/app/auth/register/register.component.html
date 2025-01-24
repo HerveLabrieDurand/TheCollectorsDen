@@ -5,7 +5,7 @@
     <!-- Left Section -->
     <div class="flex h-full w-full flex-col p-4 text-left sm:p-6 lg:w-[50%]">
       <h1
-        class="mt-6 text-3xl text-light-title dark:text-dark-title md:text-4xl lg:mt-8 lg:text-4xl xl:text-5xl 2xl:text-6xl"
+        class="mt-6 text-3xl text-light-text dark:text-dark-text md:text-4xl lg:mt-8 lg:text-4xl xl:text-5xl 2xl:text-6xl"
       >
         {{ "register.title" | translate }}
       </h1>
@@ -55,13 +55,13 @@
       <div class="mt-6 flex w-full flex-row items-center justify-start gap-1">
         <h2 class="text-sm text-black dark:text-white sm:text-base">
           {{ "register.already.have.account" | translate }}
+          <button
+            class="text-light-primary dark:text-dark-primary text-sm underline sm:text-base"
+            (click)="this.navigateToLogin()"
+          >
+            {{ "register.signin" | translate }}
+          </button>
         </h2>
-        <a
-          class="text-sm text-light-highlight-cta underline dark:text-dark-highlight-cta sm:text-base"
-          routerLink="/login"
-        >
-          {{ "register.signin" | translate }}
-        </a>
       </div>
     </div>
 
@@ -75,13 +75,13 @@
         <div class="absolute right-4 top-4"><app-settings></app-settings></div>
 
         <h1
-          class="mt-20 text-xl text-light-title dark:text-dark-title sm:mt-4 sm:text-2xl md:text-3xl lg:mt-8 lg:text-2xl xl:text-3xl 2xl:text-4xl"
+          class="mt-20 text-xl text-light-text dark:text-dark-text sm:mt-4 sm:text-2xl md:text-3xl lg:mt-8 lg:text-2xl xl:text-3xl 2xl:text-4xl"
         >
           {{ "register.form.title" | translate }}
         </h1>
 
         <form
-          class="mt-6 flex min-w-[26rem] max-w-[32rem] flex-col rounded-lg border border-light-border bg-light-container p-4 text-light-title dark:border-dark-border dark:bg-dark-container dark:text-dark-title sm:p-6"
+          class="bg-light-container dark:bg-dark-container mt-6 flex min-w-[26rem] max-w-[32rem] flex-col rounded-lg border border-light-border p-4 text-light-text dark:border-dark-border dark:text-dark-text sm:p-6"
         >
           <!-- Name -->
           <h2 class="text-base sm:text-lg">
@@ -168,7 +168,7 @@
 
           <!-- Submit Button -->
           <button
-            class="mt-6 flex items-center justify-center rounded-lg bg-light-highlight-cta p-3 text-white dark:bg-dark-highlight-cta"
+            class="bg-light-primary dark:bg-dar mt-6 flex items-center justify-center rounded-lg p-3 text-light-text dark:text-dark-text"
           >
             {{ "register.submit" | translate }}
             <ng-icon name="matKeyboardArrowRight" class="scale-[1.4]" />

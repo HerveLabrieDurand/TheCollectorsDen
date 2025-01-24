@@ -1,5 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   matCheck,
@@ -19,6 +20,11 @@ import { SettingsComponent } from '../../header/settings/settings.component';
   ],
 })
 export class RegisterComponent {
+  constructor(private router: Router) {}
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
   openFeatures: boolean = false;
 
   featureTitleTranslationKeys: string[] = [
