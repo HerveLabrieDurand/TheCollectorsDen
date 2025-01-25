@@ -32,9 +32,9 @@ module.exports = {
         primary: "#24E2E1",
         secondary: "#7BA3EE",
         accent: "#6071EB",
-        container: "#D9F8F6",
+        container: "#D5E9FD",
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-primeui")],
 };

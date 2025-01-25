@@ -2,14 +2,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastModule } from 'primeng/toast';
 import translationsEN from '../../public/i18n/en.json';
 import translationsFR from '../../public/i18n/fr.json';
-import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FooterComponent], // add TranslateDirective if needed
+  imports: [RouterOutlet, ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -17,7 +17,7 @@ export class AppComponent {
   title = 'TheCollectorsDenPortal';
   constructor(
     private translate: TranslateService,
-    @Inject(PLATFORM_ID) private platformId: object // Injects platform context
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {
     this.translate.addLangs(['en', 'fr']);
     this.translate.setTranslation('en', translationsEN);

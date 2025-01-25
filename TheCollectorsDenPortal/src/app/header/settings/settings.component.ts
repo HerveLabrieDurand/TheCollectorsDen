@@ -25,7 +25,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 export class SettingsComponent {
   constructor(
     private translate: TranslateService,
-    @Inject(PLATFORM_ID) private platformId: object // Injects platform context
+    @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
   getLang() {

@@ -18,5 +18,8 @@ export class HeaderComponent {
   @Input({ required: true }) showAuthBtns!: boolean;
   @Input({ required: true }) showTitle!: boolean;
 
-  constructor(private translate: TranslateService, private router: Router) {}
+  constructor(
+    private translate: TranslateService,
+    private router: Router,
+  ) {}
 }
