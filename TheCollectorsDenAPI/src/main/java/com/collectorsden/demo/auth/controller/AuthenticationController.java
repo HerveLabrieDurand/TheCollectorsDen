@@ -4,6 +4,7 @@ import com.collectorsden.demo.auth.dto.request.AuthenticateRequest;
 import com.collectorsden.demo.auth.dto.request.RegisterRequest;
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
 import com.collectorsden.demo.auth.service.AuthenticationService;
+import com.collectorsden.demo.auth.service.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final EmailService emailService;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully authenticated",
