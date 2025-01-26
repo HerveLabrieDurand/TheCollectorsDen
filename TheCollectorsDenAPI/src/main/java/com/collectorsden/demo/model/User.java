@@ -51,10 +51,10 @@ public class User implements UserDetails {
     private String profilePictureUrl;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -72,6 +72,9 @@ public class User implements UserDetails {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Column(name = "email_confirmed", nullable = false)
+    private boolean emailConfirmed;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
