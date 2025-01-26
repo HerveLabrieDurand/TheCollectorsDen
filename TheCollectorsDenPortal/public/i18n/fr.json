@@ -1,4 +1,11 @@
 {
+  "errors.generic.internal.server.error.title": "Erreur du serveur",
+  "errors.generic.internal.server.error.description": "Quelque chose s'est mal passé. Veuillez réessayer plus tard.",
+  "errors.generic.unexpected.error.title": "Erreur",
+  "errors.generic.unexpected.error.description": "Oups, une erreur inattendue s'est produite.",
+  "errors.specific.email.already.in.use.error.title": "E-mail déja utilisé",
+  "errors.specific.email.already.in.use.error.description": "L'adresse e-mail fournie est déjà enregistrée.",
+
   "header.signin": "Se connecter",
   "header.signup": "S'inscrire",
 
@@ -45,6 +52,12 @@
   "register.features.delivery.description": "Suivez vos livraisons facilement et gérez vos adresses rapidement.",
   "register.features.dashboard.description": "Visualisez commandes, historique et statistiques pour optimiser vos ventes.",
   "register.features.forum.description": "Participez aux discussions et gagnez des badges pour vos contributions.",
+
+  "validation.field.required": "Ce champ est requis.",
+  "validation.field.invalidEmail": "Cette adresse e-mail est invalide.",
+  "validation.field.invalidPassword": "Exigences: un caractère spécial, une lettre majuscule, une lettre minuscule, un chiffre, taille minimale de 8.",
+  "validation.field.invalidPhoneNumber": "Ce numéro de téléphone est invalide.",
+  "validation.field.invalidPostalCode": "Ce code postal est invalide.",
 
   "welcome.title": "Un paradis pour les collectionneurs vous attend!",
   "welcome.subtitle": "The Collectors Den est votre marché de confiance pour des trésors rares et des objets de collection du quotidien"

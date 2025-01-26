@@ -2,7 +2,11 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideTranslateService } from '@ngx-translate/core';
 
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import {
   provideClientHydration,
   withEventReplay,
@@ -11,7 +15,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import Nora from '@primeng/themes/aura';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
-import { ErrorInterceptor } from '../app/services/error.interceptor';
+import { ErrorInterceptor } from './services/error-interceptor/error.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -23,7 +27,7 @@ export const appConfig: ApplicationConfig = {
       defaultLanguage: 'en',
     }),
     provideAnimationsAsync(),
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
     providePrimeNG({
       theme: {
         preset: Nora,

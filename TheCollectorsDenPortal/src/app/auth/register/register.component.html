@@ -70,7 +70,7 @@
       class="flex min-h-screen flex-col bg-light-background dark:bg-dark-background lg:w-[50%]"
     >
       <div
-        class="flex h-[80vh] w-full flex-col items-center justify-center border-l border-light-border p-4 dark:border-dark-border sm:h-[100vh] sm:p-6"
+        class="flex h-fit w-full flex-col items-center justify-center border-l border-light-border p-4 dark:border-dark-border sm:p-6"
       >
         <div class="absolute right-4 top-4"><app-settings></app-settings></div>
 
@@ -81,94 +81,232 @@
         </h1>
 
         <form
-          class="bg-light-container dark:bg-dark-container mt-6 flex min-w-[26rem] max-w-[32rem] flex-col rounded-lg border border-light-border p-4 text-light-text dark:border-dark-border dark:text-dark-text sm:p-6"
+          [formGroup]="this.registerForm"
+          (ngSubmit)="this.onSubmit()"
+          class="mt-6 flex min-w-[26rem] max-w-[32rem] flex-col rounded-lg bg-light-container p-4 text-light-text dark:bg-dark-container dark:text-dark-text sm:p-6"
         >
           <!-- Name -->
-          <h2 class="text-base sm:text-lg">
+          <label for="name" class="text-base sm:text-lg">
             {{ "register.name.input.label" | translate }}
-          </h2>
+          </label>
           <input
+            id="name"
+            formControlName="name"
             type="text"
             class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
           />
+          <div *ngIf="this.registerForm.get('name')?.touched">
+            <div
+              class="text-highlight-red mt-1 text-xs"
+              *ngIf="this.registerForm.get('name')?.hasError('required')"
+            >
+              {{ "validation.field.required" | translate }}
+            </div>
+          </div>
 
           <!-- Email -->
-          <h2 class="mt-6 text-base sm:text-lg">
+          <label for="email" class="mt-6 text-base sm:text-lg">
             {{ "register.email.input.label" | translate }}
-          </h2>
+          </label>
           <input
+            id="email"
+            formControlName="email"
             type="email"
             class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
           />
+          <div *ngIf="this.registerForm.get('email')?.touched">
+            <div
+              class="text-highlight-red mt-1 text-xs"
+              *ngIf="
+                this.registerForm.get('email')?.hasError('required');
+                else invalidEmail
+              "
+            >
+              {{ "validation.field.required" | translate }}
+            </div>
+            <ng-template #invalidEmail>
+              <div
+                class="text-highlight-red mt-1 text-xs"
+                *ngIf="this.registerForm.get('email')?.hasError('email')"
+              >
+                {{ "validation.field.invalidEmail" | translate }}
+              </div>
+            </ng-template>
+          </div>
 
           <!-- Password -->
-          <h2 class="mt-6 text-base sm:text-lg">
+          <label for="password" class="mt-6 text-base sm:text-lg">
             {{ "register.password.input.label" | translate }}
-          </h2>
+          </label>
           <input
+            id="password"
+            formControlName="password"
             type="password"
             class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
           />
+          <div *ngIf="this.registerForm.get('password')?.touched">
+            <div
+              class="text-highlight-red mt-1 text-xs"
+              *ngIf="
+                this.registerForm.get('password')?.hasError('required');
+                else invalidPassword
+              "
+            >
+              {{ "validation.field.required" | translate }}
+            </div>
+            <ng-template #invalidPassword>
+              <div
+                class="text-highlight-red mt-1 text-xs"
+                *ngIf="
+                  this.registerForm.get('password')?.hasError('invalidPassword')
+                "
+              >
+                {{ "validation.field.invalidPassword" | translate }}
+              </div>
+            </ng-template>
+          </div>
 
           <!-- Address Information in a Grid -->
           <div class="mt-6 grid grid-cols-2 gap-x-12 gap-y-4 sm:gap-4">
             <!-- Address -->
             <div>
-              <h2 class="text-base sm:text-lg">
+              <label for="address" class="text-base sm:text-lg">
                 {{ "register.address.input.label" | translate }}
-              </h2>
+              </label>
               <input
+                id="address"
+                formControlName="address"
                 type="text"
                 class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
               />
+              <div *ngIf="this.registerForm.get('address')?.touched">
+                <div
+                  class="text-highlight-red mt-1 text-xs"
+                  *ngIf="this.registerForm.get('address')?.hasError('required')"
+                >
+                  {{ "validation.field.required" | translate }}
+                </div>
+              </div>
             </div>
 
             <!-- City -->
             <div class="mr-auto sm:m-0">
-              <h2 class="text-base sm:text-lg">
+              <label for="city" class="text-base sm:text-lg">
                 {{ "register.city.input.label" | translate }}
-              </h2>
+              </label>
               <input
+                id="city"
+                formControlName="city"
                 type="text"
                 class="mt-2 w-full rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
               />
+              <div *ngIf="this.registerForm.get('city')?.touched">
+                <div
+                  class="text-highlight-red mt-1 text-xs"
+                  *ngIf="this.registerForm.get('city')?.hasError('required')"
+                >
+                  {{ "validation.field.required" | translate }}
+                </div>
+              </div>
             </div>
 
             <!-- Country -->
             <div>
-              <h2 class="text-base sm:text-lg">
+              <label for="country" class="text-base sm:text-lg">
                 {{ "register.country.input.label" | translate }}
-              </h2>
+              </label>
               <input
+                id="country"
+                formControlName="country"
                 type="text"
                 class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
               />
+              <div *ngIf="this.registerForm.get('country')?.touched">
+                <div
+                  class="text-highlight-red mt-1 text-xs"
+                  *ngIf="this.registerForm.get('country')?.hasError('required')"
+                >
+                  {{ "validation.field.required" | translate }}
+                </div>
+              </div>
             </div>
 
             <!-- Postal Code -->
             <div>
-              <h2 class="text-base sm:text-lg">
+              <label for="postalCode" class="text-base sm:text-lg">
                 {{ "register.postalCode.input.label" | translate }}
-              </h2>
+              </label>
               <input
+                id="postalCode"
+                formControlName="postalCode"
                 type="text"
                 class="mt-2 w-full rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
               />
+              <div *ngIf="this.registerForm.get('postalCode')?.touched">
+                <div
+                  class="text-highlight-red mt-1 text-xs"
+                  *ngIf="
+                    this.registerForm.get('postalCode')?.hasError('required');
+                    else invalidPostalCode
+                  "
+                >
+                  {{ "validation.field.required" | translate }}
+                </div>
+                <ng-template #invalidPostalCode>
+                  <div
+                    class="text-highlight-red mt-1 text-xs"
+                    *ngIf="
+                      this.registerForm
+                        .get('postalCode')
+                        ?.hasError('invalidPostalCode')
+                    "
+                  >
+                    {{ "validation.field.invalidPostalCode" | translate }}
+                  </div>
+                </ng-template>
+              </div>
             </div>
           </div>
 
           <!-- Phone Number -->
-          <h2 class="mt-6 text-base sm:text-lg">
+          <label for="phoneNumber" class="mt-6 text-base sm:text-lg">
             {{ "register.phoneNumber.input.label" | translate }}
-          </h2>
+          </label>
           <input
+            id="phoneNumber"
+            formControlName="phoneNumber"
             type="tel"
             class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
           />
+          <div *ngIf="this.registerForm.get('phoneNumber')?.touched">
+            <div
+              class="text-highlight-red mt-1 text-xs"
+              *ngIf="
+                this.registerForm.get('phoneNumber')?.hasError('required');
+                else invalidPhoneNumber
+              "
+            >
+              {{ "validation.field.required" | translate }}
+            </div>
+            <ng-template #invalidPhoneNumber>
+              <div
+                class="text-highlight-red mt-1 text-xs"
+                *ngIf="
+                  this.registerForm
+                    .get('phoneNumber')
+                    ?.hasError('invalidPhoneNumber')
+                "
+              >
+                {{ "validation.field.invalidPhoneNumber" | translate }}
+              </div>
+            </ng-template>
+          </div>
 
           <!-- Submit Button -->
           <button
+            type="submit"
             class="bg-light-primary dark:bg-dar mt-6 flex items-center justify-center rounded-lg p-3 text-light-text dark:text-dark-text"
+            [disabled]="this.registerForm.invalid"
           >
             {{ "register.submit" | translate }}
             <ng-icon name="matKeyboardArrowRight" class="scale-[1.4]" />

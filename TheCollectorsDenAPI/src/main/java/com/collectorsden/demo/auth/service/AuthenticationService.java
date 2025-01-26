@@ -77,7 +77,7 @@ public class AuthenticationService {
                     .address(request.getAddress())
                     .city(request.getCity())
                     .postalCode(request.getPostalCode())
-                    .profilePictureUrl(request.getProfilePictureUrl())
+                    .profilePictureUrl("")
                     .role(UserRole.USER)
                     .status(UserStatus.ACTIVE)
                     .phoneNumber(request.getPhoneNumber())

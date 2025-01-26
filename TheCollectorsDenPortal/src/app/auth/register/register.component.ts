@@ -1,5 +1,11 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -8,24 +14,53 @@ import {
   matKeyboardArrowRight,
 } from '@ng-icons/material-icons/baseline';
 import { TranslatePipe } from '@ngx-translate/core';
+import { RegisterRequest } from '../../dto/auth/registerRequest';
 import { SettingsComponent } from '../../header/settings/settings.component';
+import { AuthService } from '../../services/auth/auth.service';
+import {
+  passwordValidator,
+  phoneNumberValidator,
+  postalCodeValidator,
+} from '../../utils/validators';
 
 @Component({
   selector: 'app-register',
-  imports: [TranslatePipe, SettingsComponent, NgIcon, NgIf, NgFor],
+  imports: [
+    TranslatePipe,
+    SettingsComponent,
+    NgIcon,
+    NgIf,
+    NgFor,
+    ReactiveFormsModule,
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
   viewProviders: [
     provideIcons({ matKeyboardArrowRight, matKeyboardArrowDown, matCheck }),
   ],
 })
-export class RegisterComponent {
-  constructor(private router: Router) {}
-
-  navigateToLogin() {
-    this.router.navigate(['/login']);
-  }
+export class RegisterComponent implements OnInit {
+  registerForm!: FormGroup;
   openFeatures: boolean = false;
+
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+  ) {}
+
+  ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, passwordValidator]], // Use passwordValidator
+      country: ['', Validators.required],
+      address: ['', Validators.required],
+      city: ['', Validators.required],
+      postalCode: ['', [Validators.required, postalCodeValidator]], // Use postalCodeValidator
+      phoneNumber: ['', [Validators.required, phoneNumberValidator]], // Use phoneNumberValidator
+    });
+  }
 
   featureTitleTranslationKeys: string[] = [
     'register.features.search.title',
@@ -48,6 +83,33 @@ export class RegisterComponent {
     'register.features.dashboard.description',
     'register.features.forum.description',
   ];
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  onSubmit() {
+    if (this.registerForm.valid) {
+      // Extract form values and map them to the RegisterRequest object
+      const registerRequest: RegisterRequest = this.registerForm.value;
+
+      // Call the register method in AuthService
+      this.authService.register(registerRequest).subscribe({
+        next: (response) => {
+          // Handle successful registration, e.g., navigate to a different page or show a success message
+          console.log('Registration successful:', response);
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          // Handle registration failure, e.g., show an error message
+          console.error('Registration failed:', error);
+        },
+      });
+    } else {
+      // Mark all controls as touched to trigger validation messages
+      this.registerForm.markAllAsTouched();
+    }
+  }
 
   toggleOpenFeatures() {
     this.openFeatures = !this.openFeatures;

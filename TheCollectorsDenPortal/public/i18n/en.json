@@ -1,4 +1,11 @@
 {
+  "errors.generic.internal.server.error.title": "Server Error",
+  "errors.generic.internal.server.error.description": "Something went wrong. Please try again later.",
+  "errors.generic.unexpected.error.title": "Error",
+  "errors.generic.unexpected.error.description": "Oops, an unexpected error occurred.",
+  "errors.specific.email.already.in.use.error.title": "Email Already In Use",
+  "errors.specific.email.already.in.use.error.description": "The email address is already registered.",
+
   "header.signin": "Sign In",
   "header.signup": "Sign Up",
 
@@ -45,6 +52,12 @@
   "register.features.delivery.description": "Manage delivery addresses, options, and track shipments effortlessly.",
   "register.features.dashboard.description": "Track orders, review history, and view statistics to boost sales.",
   "register.features.forum.description": "Join discussions, exchange tips, and earn badges for active participation.",
+
+  "validation.field.required": "This field is required.",
+  "validation.field.invalidEmail": "This email address is invalid.",
+  "validation.field.invalidPassword": "Requirements: one special character, one uppercase, one lowercase, one digit, minimal length of 8 characters",
+  "validation.field.invalidPhoneNumber": "This phone number is invalid.",
+  "validation.field.invalidPostalCode": "This postal code is invalid.",
 
   "welcome.title": "A Collector’s Paradise Awaits - Discover, Trade, and Treasure!",
   "welcome.subtitle": "The Collectors Den is your Trusted Marketplace for Rare Treasures and Everyday Collectibles"
