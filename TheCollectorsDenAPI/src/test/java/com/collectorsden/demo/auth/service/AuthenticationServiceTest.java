@@ -163,13 +163,13 @@ class AuthenticationServiceTest {
         when(jwtService.generateToken(any(User.class))).thenReturn("mockJwtToken");
 
         // Act
-        AuthenticationResponse response = authenticationService.register(request);
+        User user = authenticationService.register(request);
 
         // Assert
-        assertNotNull(response);
-        assertEquals("mockJwtToken", response.getAccessToken());
+        assertNotNull(user);
+        assertEquals(email, user.getEmail());
+        assertEquals("encryptedPassword", user.getPassword());
         verify(userRepository).save(any(User.class));
-        verify(jwtService).generateToken(any(User.class));
         assertEquals(2, appender.getLogs().size(), "Expected 2 log events.");
         LoggerTestUtil.assertLog(
                 appender.getLogs(),

@@ -14,7 +14,6 @@ import com.collectorsden.demo.model.enums.user.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -59,8 +58,7 @@ public class AuthenticationService {
         }
     }
 
-
-    public AuthenticationResponse register(RegisterRequest request) {
+    public User register(RegisterRequest request) {
         logger.info("Registering user with email: {}", request.getEmail());
 
         if (this.userRepository.findByEmail(request.getEmail()).isPresent()) {
@@ -88,7 +86,7 @@ public class AuthenticationService {
 
             logger.info("User registered successfully: {}", user.getEmail());
 
-            return getAuthenticationResponse(user);
+            return user;
         }
         catch (RuntimeException e) {
             var msg = "Could not register user with email: " + request.getEmail() + " to the database";

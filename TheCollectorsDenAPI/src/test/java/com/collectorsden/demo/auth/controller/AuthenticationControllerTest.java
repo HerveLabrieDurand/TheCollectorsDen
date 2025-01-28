@@ -4,8 +4,10 @@ import com.collectorsden.demo.auth.dto.request.AuthenticateRequest;
 import com.collectorsden.demo.auth.dto.request.RegisterRequest;
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
 import com.collectorsden.demo.auth.service.AuthenticationService;
+import com.collectorsden.demo.auth.service.EmailService;
 import com.collectorsden.demo.exception.GlobalExceptionHandler;
 import com.collectorsden.demo.exception.auth.InvalidCredentialsException;
+import com.collectorsden.demo.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,9 @@ class AuthenticationControllerTest {
 
     @Mock
     private AuthenticationService authenticationService;
+
+    @Mock
+    private EmailService emailService;
 
     @InjectMocks
     private AuthenticationController authenticationController;
@@ -61,7 +66,7 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void Register_Should_Return_AuthenticationResponse_When_Valid_Request() throws Exception {
+    void Register_Should_Return_Void_When_Valid_Request() throws Exception {
         // Arrange
         RegisterRequest request = RegisterRequest.builder()
                 .email("user@example.com")
@@ -69,16 +74,13 @@ class AuthenticationControllerTest {
                 .name("User")
                 .build();
 
-        AuthenticationResponse response = new AuthenticationResponse("mockJwtToken");
-
-        when(authenticationService.register(any(RegisterRequest.class))).thenReturn(response);
+        when(authenticationService.register(any(RegisterRequest.class))).thenReturn(any(User.class));
 
         // Act & Assert
         mockMvc.perform(post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken").value("mockJwtToken"));
+                .andExpect(status().isOk());
 
         verify(authenticationService).register(any(RegisterRequest.class));
     }
