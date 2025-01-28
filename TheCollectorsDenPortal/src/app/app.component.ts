@@ -5,11 +5,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { ToastModule } from 'primeng/toast';
 import translationsEN from '../../public/i18n/en.json';
 import translationsFR from '../../public/i18n/fr.json';
+import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ToastModule],
+  imports: [RouterOutlet, ToastModule, LoadingSpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

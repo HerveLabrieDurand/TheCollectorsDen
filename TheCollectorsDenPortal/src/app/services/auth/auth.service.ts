@@ -8,7 +8,15 @@ import { ApiService } from '../api/api.service';
 export class AuthService {
   constructor(private apiService: ApiService) {}
 
+  confirmEmail(token: string) {
+    return this.apiService.post(`auth/confirm-email?token=${encodeURIComponent(token)}`, null);
+  }
+
   register(request: RegisterRequest) {
     return this.apiService.post('auth/register', request);
+  }
+
+  resendConfirmationEmail(email: string) {
+    return this.apiService.post('auth/resend-confirmation-email', email);
   }
 }

@@ -1,10 +1,22 @@
 {
+  "confirm.email.having.trouble": "Haven't received the confirmation email?",
+  "confirm.email.having.trouble.provide.correct.email": "Enter the email address that you provided at registration",
+  "confirm.email.having.trouble.tips.tilte": "You can resend the email, but before you do, here are a few tips!",
+  "confirm.email.having.trouble.tips.one": "Wait a few minutes, the email might not have reached your inbox yet",
+  "confirm.email.having.trouble.tips.two": "Check your spam folder",
+  "confirm.email.having.trouble.tips.three": "Synchronize your inbox",
+  "confirm.email.retry": "Resend confirmation email",
+  "confirm.email.sucessful.resend.title": "Confirmation email sent!",
+  "confirm.email.sucessful.resend.description": "Another confirmation email has been sent. Please visit your inbox to confirm your email address.",
+
   "errors.generic.internal.server.error.title": "Server Error",
   "errors.generic.internal.server.error.description": "Something went wrong. Please try again later.",
   "errors.generic.unexpected.error.title": "Error",
   "errors.generic.unexpected.error.description": "Oops, an unexpected error occurred.",
   "errors.specific.email.already.in.use.error.title": "Email Already In Use",
   "errors.specific.email.already.in.use.error.description": "The email address is already registered.",
+  "errors.specific.email.not.registered.title": "Invalid Email",
+  "errors.specific.email.not.registered.description": "No registered user is associated with that email address.",
 
   "header.signin": "Sign In",
   "header.signup": "Sign Up",
@@ -33,6 +45,8 @@
   "register.subtitle": "Discover The Collectors Den's rich features!",
   "register.title": "Create your account",
   "register.form.title": "Sign up to The Collectors Den",
+  "register.success.toast.title": "Registration Successful!",
+  "register.success.toast.description": "A confirmation email has been sent out. Please visit your inbox to confirm your email address.",
 
   "register.features.included": "See what's included",
   "register.features.search.title": "Find Exactly What You’re Looking For",

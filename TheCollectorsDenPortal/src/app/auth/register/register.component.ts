@@ -13,10 +13,12 @@ import {
   matKeyboardArrowDown,
   matKeyboardArrowRight,
 } from '@ng-icons/material-icons/baseline';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 import { RegisterRequest } from '../../dto/auth/registerRequest';
 import { SettingsComponent } from '../../header/settings/settings.component';
 import { AuthService } from '../../services/auth/auth.service';
+import { LoadingService } from '../../services/loading/loading.service';
 import {
   passwordValidator,
   phoneNumberValidator,
@@ -47,18 +49,21 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private messageService: MessageService,
+    private translateService: TranslateService,
+    private loadingService: LoadingService,
   ) {}
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, passwordValidator]], // Use passwordValidator
+      password: ['', [Validators.required, passwordValidator]],
       country: ['', Validators.required],
       address: ['', Validators.required],
       city: ['', Validators.required],
-      postalCode: ['', [Validators.required, postalCodeValidator]], // Use postalCodeValidator
-      phoneNumber: ['', [Validators.required, phoneNumberValidator]], // Use phoneNumberValidator
+      postalCode: ['', [Validators.required, postalCodeValidator]],
+      phoneNumber: ['', [Validators.required, phoneNumberValidator]],
     });
   }
 
@@ -90,23 +95,32 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.valid) {
+      this.loadingService.show();
+
       // Extract form values and map them to the RegisterRequest object
       const registerRequest: RegisterRequest = this.registerForm.value;
 
-      // Call the register method in AuthService
       this.authService.register(registerRequest).subscribe({
-        next: (response) => {
-          // Handle successful registration, e.g., navigate to a different page or show a success message
-          console.log('Registration successful:', response);
-          this.router.navigate(['/login']);
+        next: () => {
+          this.loadingService.hide();
+          this.router.navigate(['']);
+          this.messageService.add({
+            severity: 'success',
+            summary: this.translateService.instant(
+              'register.success.toast.title',
+            ),
+            detail: this.translateService.instant(
+              'register.success.toast.description',
+            ),
+            sticky: true,
+          });
         },
-        error: (error) => {
-          // Handle registration failure, e.g., show an error message
-          console.error('Registration failed:', error);
+        error: () => {
+          this.loadingService.hide();
         },
       });
     } else {
-      // Mark all controls as touched to trigger validation messages
+      // trigger validation messages
       this.registerForm.markAllAsTouched();
     }
   }

@@ -37,10 +37,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   private handleError(error: HttpErrorResponse): void {
     switch (error.status) {
       case 400:
+        if (error.error.error === 'EmailNotRegisteredException')
         this.messageService.add({
-          severity: 'error',
-          summary: 'MUST_HANDLE_ERROR',
-          detail: 'handle this new 400 error.',
+          severity: 'warn',
+          summary: 'errors.specific.email.not.registered.title',
+          detail: 'errors.specific.email.not.registered.description',
         });
         break;
       case 401:

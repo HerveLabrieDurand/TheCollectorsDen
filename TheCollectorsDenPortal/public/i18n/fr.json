@@ -1,4 +1,14 @@
 {
+  "confirm.email.having.trouble": "Vous n'avez pas reçu le courriel de confirmation?",
+  "confirm.email.having.trouble.provide.correct.email": "Entrez l'adresse e-mail que vous avez fournie à l'inscription.",
+  "confirm.email.having.trouble.tips.tilte": "Vous pouvez réenvoyer le courriel, mais avant de procéder, voici quelques conseils!",
+  "confirm.email.having.trouble.tips.one": "Attendez quelques minutes, le courriel n'est peut-être pas encore arrivé dans votre inbox",
+  "confirm.email.having.trouble.tips.two": "Vérifier vos spams",
+  "confirm.email.having.trouble.tips.three": "Synchronizer votre inbox",
+  "confirm.email.retry": "Réenvoyer le courriel de confirmation",
+  "confirm.email.sucessful.resend.title": "Confirmation email sent!",
+  "confirm.email.sucessful.resend.description": "Un nouveau courriel de confirmation a été envoyé. Veuillez visiter votre inbox pour confirmer votre adresse e-mail.",
+
   "errors.generic.internal.server.error.title": "Erreur du serveur",
   "errors.generic.internal.server.error.description": "Quelque chose s'est mal passé. Veuillez réessayer plus tard.",
   "errors.generic.unexpected.error.title": "Erreur",
@@ -33,6 +43,8 @@
   "register.subtitle": "Découvrez les riches fonctionnalités de The Collectors Den!",
   "register.title": "Créer votre compte",
   "register.form.title": "Inscrivez-vous sur The Collectors Den",
+  "register.success.toast.title": "Inscription réussie!",
+  "register.success.toast.description": "Un courriel de confirmation a été envoyé. Veuillez visiter votre inbox pour confirmer votre adresse e-mail.",
 
   "register.features.included": "Voir ce qui est inclus",
   "register.features.search.title": "Trouvez exactement ce que vous cherchez",
