@@ -17,6 +17,6 @@ export class AuthService {
   }
 
   resendConfirmationEmail(email: string) {
-    return this.apiService.post('auth/resend-confirmation-email', email);
+    return this.apiService.post(`auth/resend-confirmation-email?email=${encodeURIComponent(email)}`, null);
   }
 }

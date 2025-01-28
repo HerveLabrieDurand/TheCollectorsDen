@@ -2,6 +2,7 @@ package com.collectorsden.demo.auth.service;
 
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
 import com.collectorsden.demo.config.security.JwtService;
+import com.collectorsden.demo.exception.auth.EmailAlreadyConfirmedException;
 import com.collectorsden.demo.exception.auth.EmailNotRegisteredException;
 import com.collectorsden.demo.exception.auth.TokenExpiredException;
 import com.collectorsden.demo.exception.auth.TokenInvalidException;
@@ -44,6 +45,10 @@ public class EmailService {
         }
 
         User user = confirmationToken.getUser();
+        if (user.isEmailConfirmed()) {
+            throw new EmailAlreadyConfirmedException();
+        }
+
         user.setEmailConfirmed(true);
         this.confirmationTokenRepository.delete(confirmationToken);
 
@@ -72,6 +77,8 @@ public class EmailService {
             this.sendConfirmationEmail(user);
 
             logger.info("Confirmation email successfully resent for : {}", email);
+        } else {
+            throw new EmailAlreadyConfirmedException();
         }
     }
 

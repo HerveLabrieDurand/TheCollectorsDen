@@ -60,4 +60,12 @@ public class GlobalExceptionHandler {
         error.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(EmailAlreadyConfirmedException.class)
+    public ResponseEntity<Map<String, String>> handleEmailAlreadyConfirmedException(EmailAlreadyConfirmedException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "EmailAlreadyConfirmedException");
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }

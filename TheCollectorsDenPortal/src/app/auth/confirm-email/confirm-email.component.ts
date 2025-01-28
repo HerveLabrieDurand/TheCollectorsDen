@@ -57,7 +57,16 @@ export class ConfirmEmailComponent implements OnInit {
       this.authService.confirmEmail(token).subscribe({
         next: (response: any) => {
           sessionStorage.setItem('jwt', response.accessToken);
-          alert('Confirmatin successfull');
+          this.messageService.add({
+            severity: 'success',
+            summary: this.translateService.instant(
+              'confirm.email.sucessful.confirmation.title',
+            ),
+            detail: this.translateService.instant(
+              'confirm.email.sucessful.confirmation.description',
+            ),
+            sticky: true,
+          });
           // this.router.navigate(['/dashboard']);
         },
         error: () => {
