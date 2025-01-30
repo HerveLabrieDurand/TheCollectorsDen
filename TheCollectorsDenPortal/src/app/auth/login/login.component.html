@@ -7,16 +7,22 @@
     </h1>
 
     <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
       class="mt-6 flex w-[26rem] flex-col rounded-lg border border-light-border bg-light-container p-6 text-light-text dark:border-dark-border dark:bg-dark-container dark:text-dark-text"
     >
       <h2>{{ "login.email.input.label" | translate }}</h2>
       <input
-        type="text"
+        id="email"
+        formControlName="email"
+        type="email"
         class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
       />
 
       <h2 class="mt-6">{{ "login.password.input.label" | translate }}</h2>
       <input
+        id="password"
+        formControlName="password"
         type="password"
         class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
       />

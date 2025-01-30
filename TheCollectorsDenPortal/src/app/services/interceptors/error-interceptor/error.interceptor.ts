@@ -62,7 +62,9 @@ export class ErrorInterceptor implements HttpInterceptor {
       default:
         this.messageService.add({
           severity: 'error',
-          summary: this.translate.instant('errors.generic.bad.request.error.title'),
+          summary: this.translate.instant(
+            'errors.generic.bad.request.error.title',
+          ),
           detail: this.translate.instant(
             'errors.generic.bad.request.error.description',
           ),
@@ -108,10 +110,36 @@ export class ErrorInterceptor implements HttpInterceptor {
           sticky: true,
         });
         break;
+      case BACKEND_ERROR_CODES.EMAIL_NOT_CONFIRMED:
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant(
+            'errors.specific.email.not.confirmed.title',
+          ),
+          detail: this.translate.instant(
+            'errors.specific.email.not.confirmed.description',
+          ),
+          sticky: true,
+        });
+        break;
+      case BACKEND_ERROR_CODES.INVALID_CREDENTIALS:
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translate.instant(
+            'errors.specific.invalid.credentials.title',
+          ),
+          detail: this.translate.instant(
+            'errors.specific.invalid.credentials.description',
+          ),
+          sticky: true,
+        });
+        break;
       default:
         this.messageService.add({
           severity: 'error',
-          summary: this.translate.instant('errors.generic.unauthorized.error.title'),
+          summary: this.translate.instant(
+            'errors.generic.unauthorized.error.title',
+          ),
           detail: this.translate.instant(
             'errors.generic.unauthorized.error.description',
           ),

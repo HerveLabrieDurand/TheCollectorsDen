@@ -5,6 +5,7 @@ import com.collectorsden.demo.auth.dto.request.RegisterRequest;
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
 import com.collectorsden.demo.config.security.JwtService;
 import com.collectorsden.demo.exception.auth.EmailAlreadyInUseException;
+import com.collectorsden.demo.exception.auth.EmailNotConfirmedException;
 import com.collectorsden.demo.exception.auth.InvalidCredentialsException;
 import com.collectorsden.demo.exception.database.DatabaseOperationException;
 import com.collectorsden.demo.model.User;
@@ -34,6 +35,17 @@ public class AuthenticationService {
     public AuthenticationResponse authenticate(AuthenticateRequest request) {
         logger.info("Authenticating user with email: {}", request.getEmail());
 
+        var user = this.userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> {
+                    logger.error("User not found for email: {}", request.getEmail());
+                    return new BadCredentialsException("");
+                });
+
+        if (!user.isEmailConfirmed()) {
+            logger.info("User with email: {} has not confirmed their email", user.getEmail());
+            throw new EmailNotConfirmedException();
+        }
+
         try {
             // The AuthenticationProvider Bean in AppConfig takes care of comparing passwords, no explicit decode necessary
             this.authenticationManager.authenticate(
@@ -42,12 +54,6 @@ public class AuthenticationService {
                             request.getPassword()
                     )
             );
-
-            var user = this.userRepository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> {
-                        logger.error("User not found for email: {}", request.getEmail());
-                        return new BadCredentialsException("");
-                    });
 
             logger.info("User authenticated successfully: {}", user.getEmail());
 

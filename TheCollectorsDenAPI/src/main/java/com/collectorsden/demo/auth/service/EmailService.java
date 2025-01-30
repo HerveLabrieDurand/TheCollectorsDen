@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,7 +32,7 @@ public class EmailService {
 
     private final static String EMAIL_CONFIRMATION_SUBJECT = "Confirm your TCD account";
 
-    public AuthenticationResponse confirmEmail(String token) {
+    public void confirmEmail(String token) {
         logger.info("Confirming email with token: {}", token);
 
         ConfirmationToken confirmationToken = this.confirmationTokenRepository.findByToken(token)
@@ -52,13 +51,7 @@ public class EmailService {
         user.setEmailConfirmed(true);
         this.confirmationTokenRepository.delete(confirmationToken);
 
-        String jwtToken = this.jwtService.generateToken(user);
-
         logger.info("User with email: {} has successfully confirmed his email", user.getEmail());
-
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .build();
     }
 
     public void resendConfirmationEmail(String email) {

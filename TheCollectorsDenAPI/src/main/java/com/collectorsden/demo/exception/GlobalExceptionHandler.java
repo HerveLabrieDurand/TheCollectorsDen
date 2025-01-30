@@ -68,4 +68,12 @@ public class GlobalExceptionHandler {
         error.put("message", ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(EmailNotConfirmedException.class)
+    public ResponseEntity<Map<String, String>> handleEmailNotConfirmedException(EmailNotConfirmedException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put("error", "EmailNotConfirmedException");
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+    }
 }

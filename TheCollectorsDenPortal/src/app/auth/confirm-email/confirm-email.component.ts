@@ -48,15 +48,13 @@ export class ConfirmEmailComponent implements OnInit {
     'confirm.email.having.trouble.tips.three',
   ];
 
-  initialConfirmFailed: boolean = false;
-
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
 
     if (token && isPlatformBrowser(this.platformId)) {
       this.authService.confirmEmail(token).subscribe({
         next: (response: any) => {
-          sessionStorage.setItem('jwt', response.accessToken);
+          this.router.navigate(['']);
           this.messageService.add({
             severity: 'success',
             summary: this.translateService.instant(
@@ -67,10 +65,6 @@ export class ConfirmEmailComponent implements OnInit {
             ),
             sticky: true,
           });
-          // this.router.navigate(['/dashboard']);
-        },
-        error: () => {
-          this.initialConfirmFailed = false;
         },
       });
     }
@@ -104,6 +98,4 @@ export class ConfirmEmailComponent implements OnInit {
       this.emailForm.markAllAsTouched();
     }
   }
-
-  resendConfirmationEmail(): void {}
 }

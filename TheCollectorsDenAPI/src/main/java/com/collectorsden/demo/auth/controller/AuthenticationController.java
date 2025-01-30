@@ -24,7 +24,6 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
     private final EmailService emailService;
 
-
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully authenticated",
                     content = @Content(mediaType = "application/json",
@@ -63,8 +62,10 @@ public class AuthenticationController {
                     content = @Content(mediaType = "application/json"))
     })
     @PostMapping("/confirm-email")
-    public ResponseEntity<AuthenticationResponse> confirmEmail(@RequestParam String token) {
-        return ResponseEntity.ok(this.emailService.confirmEmail(token));
+    public ResponseEntity<Void> confirmEmail(@RequestParam String token) {
+        this.emailService.confirmEmail(token);
+
+        return ResponseEntity.ok().build();
     }
 
     @ApiResponses(value = {

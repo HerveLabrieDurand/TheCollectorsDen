@@ -15,8 +15,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import Nora from '@primeng/themes/aura';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
-import { ErrorInterceptor } from './services/error-interceptor/error.interceptor';
+import { ErrorInterceptor } from './services/interceptors/error-interceptor/error.interceptor';
 import { routes } from './app.routes';
+import { AuthInterceptor } from './services/interceptors/auth-interceptor/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -36,6 +37,11 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true,
     },
     MessageService,
