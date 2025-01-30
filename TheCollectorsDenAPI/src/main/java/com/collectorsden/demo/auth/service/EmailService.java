@@ -1,7 +1,5 @@
 package com.collectorsden.demo.auth.service;
 
-import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
-import com.collectorsden.demo.config.security.JwtService;
 import com.collectorsden.demo.exception.auth.EmailAlreadyConfirmedException;
 import com.collectorsden.demo.exception.auth.EmailNotRegisteredException;
 import com.collectorsden.demo.exception.auth.TokenExpiredException;
@@ -26,7 +24,6 @@ import java.util.UUID;
 public class EmailService {
     private final JavaMailSender mailSender;
     private final ConfirmationTokenRepository confirmationTokenRepository;
-    private final JwtService jwtService;
     private final UserRepository userRepository;
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
 
@@ -45,6 +42,7 @@ public class EmailService {
 
         User user = confirmationToken.getUser();
         if (user.isEmailConfirmed()) {
+            logger.error("User with email: {} has already confirmed their email", user.getEmail());
             throw new EmailAlreadyConfirmedException();
         }
 

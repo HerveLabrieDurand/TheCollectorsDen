@@ -33,16 +33,16 @@ import static org.mockito.Mockito.*;
 class AuthenticationServiceTest {
 
     @Mock
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManagerMock;
     @Mock
-    private JwtService jwtService;
+    private JwtService jwtServiceMock;
     @Mock
-    private PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoderMock;
     @Mock
-    private UserRepository userRepository;
+    private UserRepository userRepositoryMock;
 
     @InjectMocks
-    private AuthenticationService authenticationService;
+    private AuthenticationService sut;
 
     @BeforeEach
     void setUp() {
@@ -61,20 +61,20 @@ class AuthenticationServiceTest {
                 .role(UserRole.USER)
                 .build();
 
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+        when(this.authenticationManagerMock.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(null); // Simulating successful authentication
-        when(userRepository.findByEmail("user@example.com")).thenReturn(Optional.of(user));
-        when(jwtService.generateToken(user)).thenReturn("mockJwtToken");
+        when(this.userRepositoryMock.findByEmail("user@example.com")).thenReturn(Optional.of(user));
+        when(this.jwtServiceMock.generateToken(user)).thenReturn("mockJwtToken");
 
         // Act
-        AuthenticationResponse response = authenticationService.authenticate(request);
+        AuthenticationResponse response = this.sut.authenticate(request);
 
         // Assert
         assertNotNull(response);
         assertEquals("mockJwtToken", response.getAccessToken());
-        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verify(userRepository).findByEmail("user@example.com");
-        verify(jwtService).generateToken(user);
+        verify(this.authenticationManagerMock).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verify(this.userRepositoryMock).findByEmail("user@example.com");
+        verify(this.jwtServiceMock).generateToken(user);
 
         assertEquals(2, appender.getLogs().size(), "Expected 2 log events.");
         LoggerTestUtil.assertLog(
@@ -92,16 +92,16 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    void Authenticate_Should_Throw_BadCredentialsException_When_Database_Fetching_Throws() {
+    void Authenticate_Should_Throw_InvalidCredentialsException_When_Database_Fetching_Throws() {
         // Arrange
         TestLogAppender appender = LoggerTestUtil.captureLogs(AuthenticationService.class);
         AuthenticateRequest request = new AuthenticateRequest("user@example.com", "wrongPassword");
 
-        when(userRepository.findByEmail("user@example.com")).thenThrow(BadCredentialsException.class);
+        when(this.userRepositoryMock.findByEmail("user@example.com")).thenThrow(InvalidCredentialsException.class);
 
         // Act & Assert
-        assertThrows(BadCredentialsException.class, () -> authenticationService.authenticate(request));
-        assertEquals(1, appender.getLogs().size(), "Expected 2 log events.");
+        assertThrows(InvalidCredentialsException.class, () -> this.sut.authenticate(request));
+        assertEquals(1, appender.getLogs().size(), "Expected 1 log events.");
         LoggerTestUtil.assertLog(
                 appender.getLogs(),
                 0,
@@ -121,11 +121,11 @@ class AuthenticationServiceTest {
                 .encryptedPassword("encryptedPassword")
                 .emailConfirmed(false).build();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(this.userRepositoryMock.findByEmail(email)).thenReturn(Optional.of(user));
 
         // Act & Assert
-        assertThrows(EmailNotConfirmedException.class, () -> authenticationService.authenticate(request));
-        verifyNoInteractions(authenticationManager, jwtService);
+        assertThrows(EmailNotConfirmedException.class, () -> this.sut.authenticate(request));
+        verifyNoInteractions(this.authenticationManagerMock, this.jwtServiceMock);
         assertEquals(2, appender.getLogs().size(), "Expected 2 log events.");
         LoggerTestUtil.assertLog(
                 appender.getLogs(),
@@ -152,14 +152,14 @@ class AuthenticationServiceTest {
                 .encryptedPassword("encryptedPassword")
                 .emailConfirmed(true).build();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+        when(this.userRepositoryMock.findByEmail(email)).thenReturn(Optional.of(user));
+        when(this.authenticationManagerMock.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(BadCredentialsException.class);
 
         // Act & Assert
-        assertThrows(InvalidCredentialsException.class, () -> authenticationService.authenticate(request));
-        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verifyNoInteractions(jwtService);
+        assertThrows(InvalidCredentialsException.class, () -> this.sut.authenticate(request));
+        verify(this.authenticationManagerMock).authenticate(any(UsernamePasswordAuthenticationToken.class));
+        verifyNoInteractions(this.jwtServiceMock);
         assertEquals(2, appender.getLogs().size(), "Expected 2 log events.");
         LoggerTestUtil.assertLog(
                 appender.getLogs(),
@@ -187,18 +187,18 @@ class AuthenticationServiceTest {
                 .password(password)
                 .build();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
-        when(passwordEncoder.encode(password)).thenReturn("encryptedPassword");
-        when(jwtService.generateToken(any(User.class))).thenReturn("mockJwtToken");
+        when(this.userRepositoryMock.findByEmail(email)).thenReturn(Optional.empty());
+        when(this.passwordEncoderMock.encode(password)).thenReturn("encryptedPassword");
+        when(this.jwtServiceMock.generateToken(any(User.class))).thenReturn("mockJwtToken");
 
         // Act
-        User user = authenticationService.register(request);
+        User user = sut.register(request);
 
         // Assert
         assertNotNull(user);
         assertEquals(email, user.getEmail());
         assertEquals("encryptedPassword", user.getPassword());
-        verify(userRepository).save(any(User.class));
+        verify(this.userRepositoryMock).save(any(User.class));
         assertEquals(2, appender.getLogs().size(), "Expected 2 log events.");
         LoggerTestUtil.assertLog(
                 appender.getLogs(),
@@ -226,12 +226,12 @@ class AuthenticationServiceTest {
                 .password(password)
                 .build();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(new User()));
+        when(this.userRepositoryMock.findByEmail(email)).thenReturn(Optional.of(new User()));
 
         // Act & Assert
-        assertThrows(EmailAlreadyInUseException.class, () -> authenticationService.register(request));
-        verify(userRepository, never()).save(any(User.class));
-        verifyNoInteractions(jwtService);
+        assertThrows(EmailAlreadyInUseException.class, () -> this.sut.register(request));
+        verify(this.userRepositoryMock, never()).save(any(User.class));
+        verifyNoInteractions(this.jwtServiceMock);
         assertEquals(2, appender.getLogs().size(), "Expected 2 log events.");
         LoggerTestUtil.assertLog(
                 appender.getLogs(),
@@ -259,14 +259,14 @@ class AuthenticationServiceTest {
                 .password(password)
                 .build();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
-        when(passwordEncoder.encode(password)).thenReturn("encryptedPassword");
-        doThrow(RuntimeException.class).when(userRepository).save(any(User.class));
+        when(this.userRepositoryMock.findByEmail(email)).thenReturn(Optional.empty());
+        when(this.passwordEncoderMock.encode(password)).thenReturn("encryptedPassword");
+        doThrow(RuntimeException.class).when(this.userRepositoryMock).save(any(User.class));
 
         // Act & Assert
-        assertThrows(DatabaseOperationException.class, () -> authenticationService.register(request));
-        verify(userRepository).save(any(User.class));
-        verifyNoInteractions(jwtService);
+        assertThrows(DatabaseOperationException.class, () -> this.sut.register(request));
+        verify(this.userRepositoryMock).save(any(User.class));
+        verifyNoInteractions(this.jwtServiceMock);
         assertEquals(2, appender.getLogs().size(), "Expected 2 log events.");
         LoggerTestUtil.assertLog(
                 appender.getLogs(),

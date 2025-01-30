@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +37,7 @@ public class AuthenticationService {
         var user = this.userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> {
                     logger.error("User not found for email: {}", request.getEmail());
-                    return new BadCredentialsException("");
+                    return new InvalidCredentialsException();
                 });
 
         if (!user.isEmailConfirmed()) {

@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EmailAlreadyInUseException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidCredentialsException(EmailAlreadyInUseException ex) {
+    public ResponseEntity<Map<String, String>> handleEmailAlreadyInUseException(EmailAlreadyInUseException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("error", "EmailAlreadyInUseException");
         error.put("message", ex.getMessage());
@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(DatabaseOperationException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidCredentialsException(DatabaseOperationException ex) {
+    public ResponseEntity<Map<String, String>> handleDatabaseOperationException(DatabaseOperationException ex) {
         Map<String, String> error = new HashMap<>();
         error.put("error", "DatabaseOperationException");
         error.put("message", ex.getMessage());

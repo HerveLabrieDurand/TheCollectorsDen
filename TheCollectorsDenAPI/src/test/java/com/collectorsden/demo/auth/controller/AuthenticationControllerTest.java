@@ -38,7 +38,7 @@ class AuthenticationControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(authenticationController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(authenticationController).build();
     }
 
     @Test
@@ -47,20 +47,33 @@ class AuthenticationControllerTest {
         AuthenticateRequest request = new AuthenticateRequest("user@example.com", "password123");
         AuthenticationResponse response = new AuthenticationResponse("mockJwtToken");
 
-        when(authenticationService.authenticate(any(AuthenticateRequest.class))).thenReturn(response);
+        when(this.authenticationService.authenticate(any(AuthenticateRequest.class))).thenReturn(response);
 
         // Act & Assert
-        mockMvc.perform(post("/api/v1/auth/authenticate")
+        this.mockMvc.perform(post("/api/v1/auth/authenticate")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(this.objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accessToken").value("mockJwtToken"));
 
-        verify(authenticationService).authenticate(any(AuthenticateRequest.class));
+        verify(this.authenticationService).authenticate(any(AuthenticateRequest.class));
     }
 
     @Test
-    void Register_Should_Return_Void_When_Valid_Request() throws Exception {
+    void Authenticate_Should_Return_Failure_When_Invalid_Request() throws Exception {
+        // Arrange
+        AuthenticateRequest request = new AuthenticateRequest("notAnEmail", "");
+        AuthenticationResponse response = new AuthenticationResponse("mockJwtToken");
+
+        // Act & Assert
+        this.mockMvc.perform(post("/api/v1/auth/authenticate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(this.objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void Register_Should_Return_Success_When_Valid_Request() throws Exception {
         // Arrange
         RegisterRequest request = RegisterRequest.builder()
                 .email("user@example.com")
@@ -68,14 +81,82 @@ class AuthenticationControllerTest {
                 .name("User")
                 .build();
 
-        when(authenticationService.register(any(RegisterRequest.class))).thenReturn(any(User.class));
+        when(this.authenticationService.register(any(RegisterRequest.class))).thenReturn(any(User.class));
 
         // Act & Assert
-        mockMvc.perform(post("/api/v1/auth/register")
+        this.mockMvc.perform(post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(this.objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk());
 
-        verify(authenticationService).register(any(RegisterRequest.class));
+        verify(this.authenticationService).register(any(RegisterRequest.class));
+    }
+
+    @Test
+    void Register_Should_Return_Failure_When_Invalid_Request() throws Exception {
+        // Arrange
+        RegisterRequest request = RegisterRequest.builder()
+                .email("notAnEmail")
+                .password("")
+                .name("")
+                .build();
+
+        // Act & Assert
+        this.mockMvc.perform(post("/api/v1/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(this.objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void ConfirmEmail_Should_Succeed_When_Valid_Request() throws Exception {
+        // Arrange
+        String token = "mockJwtToken";
+
+        // Act & Assert
+        this.mockMvc.perform(post("/api/v1/auth/confirm-email")
+                        .param("token", token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(this.emailService).confirmEmail(token);
+    }
+
+    @Test
+    void ConfirmEmail_Should_Fail_When_Invalid_Token() throws Exception {
+        // Arrange
+        String token = "";
+
+        // Act & Assert
+        this.mockMvc.perform(post("/api/v1/auth/confirm-email")
+                        .param("token", token)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void ResendConfirmEmail_Should_Succeed_When_Valid_Request() throws Exception {
+        // Arrange
+        String email = "example@thecollectorsden.com";
+
+        // Act & Assert
+        this.mockMvc.perform(post("/api/v1/auth/resend-confirmation-email")
+                        .param("email", email)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        verify(this.emailService).resendConfirmationEmail(email);
+    }
+
+    @Test
+    void ResendConfirmEmail_Should_Fail_When_Invalid_Email() throws Exception {
+        // Arrange
+        String email = "notAnEmail";
+
+        // Act & Assert
+        this.mockMvc.perform(post("/api/v1/auth/resend-confirmation-email")
+                        .param("email", email)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
     }
 }

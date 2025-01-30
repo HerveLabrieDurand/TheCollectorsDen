@@ -1,5 +1,7 @@
 package com.collectorsden.demo.auth.dto.request;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticateRequest {
+    @NotBlank(message = "Email must not be empty")
+    @Email(message = "Invalid email format")
     private String email;
+
+    @NotBlank(message = "Password must not be empty")
     private String password;
 }
