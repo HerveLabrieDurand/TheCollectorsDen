@@ -6,6 +6,7 @@ import com.collectorsden.demo.auth.dto.request.RegisterRequest;
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
 import com.collectorsden.demo.config.security.JwtService;
 import com.collectorsden.demo.exception.auth.EmailAlreadyInUseException;
+import com.collectorsden.demo.exception.auth.EmailNotConfirmedException;
 import com.collectorsden.demo.exception.auth.InvalidCredentialsException;
 import com.collectorsden.demo.exception.database.DatabaseOperationException;
 import com.collectorsden.demo.model.User;
@@ -56,6 +57,7 @@ class AuthenticationServiceTest {
         User user = User.builder()
                 .email("user@example.com")
                 .encryptedPassword("encryptedPassword")
+                .emailConfirmed(true)
                 .role(UserRole.USER)
                 .build();
 
@@ -90,18 +92,40 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    void Authenticate_Should_Throw_InvalidCredentialsException_When_Credentials_Are_Invalid() {
+    void Authenticate_Should_Throw_BadCredentialsException_When_Database_Fetching_Throws() {
         // Arrange
         TestLogAppender appender = LoggerTestUtil.captureLogs(AuthenticationService.class);
         AuthenticateRequest request = new AuthenticateRequest("user@example.com", "wrongPassword");
 
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenThrow(BadCredentialsException.class);
+        when(userRepository.findByEmail("user@example.com")).thenThrow(BadCredentialsException.class);
 
         // Act & Assert
-        assertThrows(InvalidCredentialsException.class, () -> authenticationService.authenticate(request));
-        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verifyNoInteractions(userRepository, jwtService);
+        assertThrows(BadCredentialsException.class, () -> authenticationService.authenticate(request));
+        assertEquals(1, appender.getLogs().size(), "Expected 2 log events.");
+        LoggerTestUtil.assertLog(
+                appender.getLogs(),
+                0,
+                Level.INFO,
+                "Authenticating user with email: " + request.getEmail()
+        );
+    }
+
+    @Test
+    void Authenticate_Should_Throw_EmailNotConfirmedException_When_User_Email_Not_Confirmed() {
+        // Arrange
+        String email = "user@example.com";
+        TestLogAppender appender = LoggerTestUtil.captureLogs(AuthenticationService.class);
+        AuthenticateRequest request = new AuthenticateRequest(email, "password");
+        User user = User.builder()
+                .email(email)
+                .encryptedPassword("encryptedPassword")
+                .emailConfirmed(false).build();
+
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+
+        // Act & Assert
+        assertThrows(EmailNotConfirmedException.class, () -> authenticationService.authenticate(request));
+        verifyNoInteractions(authenticationManager, jwtService);
         assertEquals(2, appender.getLogs().size(), "Expected 2 log events.");
         LoggerTestUtil.assertLog(
                 appender.getLogs(),
@@ -113,19 +137,24 @@ class AuthenticationServiceTest {
                 appender.getLogs(),
                 1,
                 Level.ERROR,
-                "Authentication failed for email: " + request.getEmail()
+                "User with email: " + email + " has not confirmed their email"
         );
     }
 
     @Test
-    void Authenticate_Should_Throw_InvalidCredentialsException_When_Database_Fetching_Throws() {
+    void Authenticate_Should_Throw_InvalidCredentialsException_When_Credentials_Are_Invalid() {
         // Arrange
+        String email = "user@example.com";
         TestLogAppender appender = LoggerTestUtil.captureLogs(AuthenticationService.class);
-        AuthenticateRequest request = new AuthenticateRequest("user@example.com", "wrongPassword");
+        AuthenticateRequest request = new AuthenticateRequest(email, "wrongPassword");
+        User user = User.builder()
+                .email(email)
+                .encryptedPassword("encryptedPassword")
+                .emailConfirmed(true).build();
 
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
-                .thenReturn(null);
-        when(userRepository.findByEmail("user@example.com")).thenThrow(BadCredentialsException.class);
+                .thenThrow(BadCredentialsException.class);
 
         // Act & Assert
         assertThrows(InvalidCredentialsException.class, () -> authenticationService.authenticate(request));

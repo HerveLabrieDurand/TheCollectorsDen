@@ -1,13 +1,16 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { AuthenticateRequest } from '../../dto/auth/authenticateRequest';
 import { RegisterRequest } from '../../dto/auth/registerRequest';
 import { ApiService } from '../api/api.service';
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    @Inject(PLATFORM_ID) private platformId: any,
+  ) {}
 
   private readonly TOKEN_KEY = 'jwt';
 
@@ -34,15 +37,21 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return sessionStorage.getItem(this.TOKEN_KEY);
+    if (isPlatformBrowser(this.platformId)) {
+      return sessionStorage.getItem(this.TOKEN_KEY);
+    }
+    return null;
   }
 
   saveToken(token: string): void {
-    console.log('saving token');
-    sessionStorage.setItem(this.TOKEN_KEY, token);
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem(this.TOKEN_KEY, token);
+    }
   }
 
   removeToken(): void {
-    sessionStorage.removeItem(this.TOKEN_KEY);
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.removeItem(this.TOKEN_KEY);
+    }
   }
 }

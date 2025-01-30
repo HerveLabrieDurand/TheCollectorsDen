@@ -42,7 +42,7 @@ public class AuthenticationService {
                 });
 
         if (!user.isEmailConfirmed()) {
-            logger.info("User with email: {} has not confirmed their email", user.getEmail());
+            logger.error("User with email: {} has not confirmed their email", user.getEmail());
             throw new EmailNotConfirmedException();
         }
 
