@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "serve:ssr:TheCollectorsDenPortal": "node dist/the-collectors-den-portal/server/server.mjs"
   },
   "private": true,
@@ -40,23 +42,43 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@angular-builders/jest": "^19.0.0",
     "@angular-devkit/build-angular": "^19.1.1",
     "@angular/cli": "^19.1.1",
     "@angular/compiler-cli": "^19.1.0",
     "@types/express": "^4.17.17",
-    "@types/jasmine": "~5.1.0",
+    "@types/jest": "^29.5.14",
     "@types/node": "^18.18.0",
     "autoprefixer": "^10.4.20",
-    "jasmine-core": "~5.5.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "jest": "^29.7.0",
+    "jest-mock": "^29.7.0",
+    "jest-preset-angular": "^14.5.1",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.17",
+    "ts-jest": "^29.2.5",
     "typescript": "~5.7.2"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": ["/Users/hervelabrie/Documents/PersonalProjects/TheCollectorsDen/TheCollectorsDenPortal/src/setup-jest.ts"],
+    "testMatch": [
+      "**/__tests__/**/*.+(ts|tsx|js)",
+      "**/?(*.)+(spec|test).+(ts|tsx|js)"
+    ],
+    "transform": {
+      "^.+\\.(ts|js|html)$": [
+        "jest-preset-angular",
+        {
+          "tsconfig": "/Users/hervelabrie/Documents/PersonalProjects/TheCollectorsDen/TheCollectorsDenPortal/tsconfig.spec.json",
+          "stringifyContentPathRegex": "\\.html$",
+          "isolatedModules": true
+        }
+      ]
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!.*\\.mjs$)"
+    ]
   }
 }
