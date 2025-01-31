@@ -44,17 +44,17 @@ describe('ApiService', () => {
       const mockResponse = { success: true };
       const endpoint = 'test-endpoint';
       const postData = { key: 'value' };
-      httpClientMock.post.mockReturnValue(of(mockResponse)); // Mocking the response
+      httpClientMock.post.mockReturnValue(of(mockResponse));
 
       service.post(endpoint, postData).subscribe((response) => {
-        expect(response).toEqual(mockResponse); // Verifying the returned data
+        expect(response).toEqual(mockResponse);
       });
 
       expect(httpClientMock.post).toHaveBeenCalledWith(
         `${url}/${endpoint}`,
         postData,
       );
-      expect(httpClientMock.post).toHaveBeenCalledTimes(1); // Ensure it's called once
+      expect(httpClientMock.post).toHaveBeenCalledTimes(1);
     });
   });
 });
