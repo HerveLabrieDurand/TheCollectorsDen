@@ -5,6 +5,7 @@ import { provideTranslateService } from '@ngx-translate/core';
 import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
+  withFetch,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import {
@@ -15,9 +16,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import Nora from '@primeng/themes/aura';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
-import { ErrorInterceptor } from './services/interceptors/error-interceptor/error.interceptor';
 import { routes } from './app.routes';
 import { AuthInterceptor } from './services/interceptors/auth-interceptor/auth.interceptor';
+import { ErrorInterceptor } from './services/interceptors/error-interceptor/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -28,7 +29,7 @@ export const appConfig: ApplicationConfig = {
       defaultLanguage: 'en',
     }),
     provideAnimationsAsync(),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withInterceptorsFromDi(), withFetch()),
     providePrimeNG({
       theme: {
         preset: Nora,
