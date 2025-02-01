@@ -29,7 +29,11 @@
         />
       </button>
 
-      <div *ngIf="openFeatures" class="flex flex-col">
+      <div
+        *ngIf="openFeatures"
+        class="flex flex-col"
+        data-testid="features"
+      >
         <div
           *ngFor="
             let titleKey of this.featureTitleTranslationKeys;
@@ -304,6 +308,7 @@
 
           <!-- Submit Button -->
           <button
+            data-testid="submit-button"
             type="submit"
             class="bg-light-primary dark:bg-dar mt-6 flex items-center justify-center rounded-lg p-3 text-light-text dark:text-dark-text"
             [disabled]="this.registerForm.invalid"
