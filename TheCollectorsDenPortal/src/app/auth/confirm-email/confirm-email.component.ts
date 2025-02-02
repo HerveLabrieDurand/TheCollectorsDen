@@ -13,6 +13,7 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { HeaderComponent } from '../../header/header.component';
 import { AuthService } from '../../services/auth/auth.service';
+import { LoadingService } from '../../services/loading/loading.service';
 
 @Component({
   selector: 'app-confirm-email',
@@ -39,6 +40,7 @@ export class ConfirmEmailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private translateService: TranslateService,
+    private loadingService: LoadingService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
@@ -53,7 +55,7 @@ export class ConfirmEmailComponent implements OnInit {
 
     if (token && isPlatformBrowser(this.platformId)) {
       this.authService.confirmEmail(token).subscribe({
-        next: (response: any) => {
+        next: () => {
           this.router.navigate(['']);
           this.messageService.add({
             severity: 'success',
@@ -76,10 +78,13 @@ export class ConfirmEmailComponent implements OnInit {
 
   onSubmit() {
     if (this.emailForm.valid) {
+      this.loadingService.show();
+
       this.authService
         .resendConfirmationEmail(this.emailForm.get('email')!.value)
         .subscribe({
           next: () => {
+            this.loadingService.hide();
             this.router.navigate(['']);
             this.messageService.add({
               severity: 'success',
@@ -91,6 +96,9 @@ export class ConfirmEmailComponent implements OnInit {
               ),
               sticky: true,
             });
+          },
+          error: () => {
+            this.loadingService.hide();
           },
         });
     } else {

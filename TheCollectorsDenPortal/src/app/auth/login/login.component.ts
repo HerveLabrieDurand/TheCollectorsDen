@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
 
       this.authService.authenticate(authenticateRequest).subscribe({
         next: (response: any) => {
-          console.log(response);
           this.loadingService.hide();
           this.authService.saveToken(response.accessToken);
           this.router.navigate(['dashboard']);

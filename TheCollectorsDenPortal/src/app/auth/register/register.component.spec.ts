@@ -15,9 +15,9 @@ import {
 } from '@ng-icons/material-icons/baseline';
 import { TranslateService } from '@ngx-translate/core';
 import { screen } from '@testing-library/angular';
-import '@testing-library/jest-dom'; // Ensure Jest DOM is imported
+import '@testing-library/jest-dom';
 import { MessageService } from 'primeng/api';
-import { of, throwError } from 'rxjs';
+import { of } from 'rxjs';
 import { SettingsComponent } from '../../header/settings/settings.component';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoadingService } from '../../services/loading/loading.service';
