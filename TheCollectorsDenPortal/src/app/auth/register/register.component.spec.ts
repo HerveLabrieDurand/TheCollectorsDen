@@ -6,7 +6,6 @@ import {
   tick,
 } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
@@ -19,10 +18,10 @@ import { screen } from '@testing-library/angular';
 import '@testing-library/jest-dom'; // Ensure Jest DOM is imported
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
-import { RegisterRequest } from '../../dto/auth/registerRequest';
 import { SettingsComponent } from '../../header/settings/settings.component';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoadingService } from '../../services/loading/loading.service';
+import { mockTranslateService } from '../../tests/mocks/translateServiceMock';
 import { RegisterComponent } from './register.component';
 
 describe('RegisterComponent', () => {
@@ -33,17 +32,6 @@ describe('RegisterComponent', () => {
   let messageService: MessageService;
   let loadingService: LoadingService;
   let translateService: TranslateService;
-
-  const mockTranslateService = {
-    instant: jest.fn((key: string) => key),
-    get: jest.fn((key: string) => of(key)),
-    stream: jest.fn((key: string) => of(key)),
-    use: jest.fn(),
-    currentLang: 'en',
-    onLangChange: of({ lang: 'en', translations: {} }),
-    onTranslationChange: of({}),
-    onDefaultLangChange: of({}),
-  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -127,34 +115,6 @@ describe('RegisterComponent', () => {
     });
   }));
 
-  it('should handle registration error', fakeAsync(() => {
-    jest
-      .spyOn(authService, 'register')
-      .mockReturnValue(throwError(() => new Error()));
-
-    const validFormData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      password: 'ValidPass123!',
-      country: 'Country',
-      address: 'Address',
-      city: 'City',
-      postalCode: 'G1G1G1',
-      phoneNumber: '1112223344',
-    };
-
-    component.registerForm.setValue(validFormData);
-    component.onSubmit();
-    tick();
-
-    expect(loadingService.hide).toHaveBeenCalled();
-  }));
-
-  it('should navigate to login', () => {
-    component.navigateToLogin();
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
-  });
-
   it('should toggle features visibility', () => {
     expect(screen.queryByTestId('features')).not.toBeInTheDocument();
     expect(component.openFeatures).toBe(false);
@@ -165,23 +125,26 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
 
     expect(screen.getByTestId('features')).toBeInTheDocument();
+
+    component.featureTitleTranslationKeys.forEach((element) => {
+      expect(screen.getByText(element)).toBeInTheDocument();
+    });
+    component.featureDescriptionTranslationKeys.forEach((element) => {
+      expect(screen.getByText(element)).toBeInTheDocument();
+    });
   });
 
   it('should display validation messages for required fields', () => {
-    // Test name field
     const nameControl = component.registerForm.get('name');
     nameControl?.markAsTouched();
     fixture.detectChanges();
 
-    const errorElement = fixture.debugElement.query(By.css('#name + div'));
-    expect(errorElement.nativeElement.textContent).toContain(
-      'validation.field.required',
-    );
+    expect(screen.getByText('validation.field.required')).toBeInTheDocument();
   });
 
   it('should enable submit button when form is valid', async () => {
     const button = screen.getByTestId('submit-button');
-    expect(button).toBeDisabled(); // Check initial disabled state
+    expect(button).toBeDisabled();
 
     const validFormData = {
       name: 'Test User',

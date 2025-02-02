@@ -12,10 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthenticateRequest {
-    @NotBlank(message = "Email must not be empty")
-    @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "Password must not be empty")
     private String password;
 }

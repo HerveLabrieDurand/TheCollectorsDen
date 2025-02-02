@@ -33,7 +33,7 @@ public class AuthenticationController {
     })
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @Valid @RequestBody AuthenticateRequest request
+            @RequestBody AuthenticateRequest request
     ) {
         return ResponseEntity.ok(this.authenticationService.authenticate(request));
     }
@@ -45,7 +45,7 @@ public class AuthenticationController {
     })
     @PostMapping("/register")
     public ResponseEntity<Void> register(
-            @Valid @RequestBody RegisterRequest request
+            @RequestBody RegisterRequest request
     ) {
         User user = this.authenticationService.register(request);
         this.emailService.sendConfirmationEmail(user);
@@ -59,7 +59,7 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "401", description = "Token is expired or invalid", content = @Content(mediaType = "application/json"))
     })
     @PostMapping("/confirm-email")
-    public ResponseEntity<Void> confirmEmail(@NotBlank @RequestParam String token) {
+    public ResponseEntity<Void> confirmEmail(@RequestParam String token) {
         this.emailService.confirmEmail(token);
 
         return ResponseEntity.ok().build();
@@ -70,7 +70,7 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "400", description = "Email is either not registered or already confirmed", content = @Content(mediaType = "application/json"))
     })
     @PostMapping("/resend-confirmation-email")
-    public ResponseEntity<Void> resendConfirmEmail(@RequestParam @Email String email) {
+    public ResponseEntity<Void> resendConfirmEmail(@RequestParam String email) {
         this.emailService.resendConfirmationEmail(email);
 
         return ResponseEntity.ok().build();

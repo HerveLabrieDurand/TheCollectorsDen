@@ -3,7 +3,7 @@
   "confirm.email.having.trouble.provide.correct.email": "Entrez l'adresse e-mail que vous avez fournie à l'inscription.",
   "confirm.email.having.trouble.tips.tilte": "Vous pouvez réenvoyer le courriel, mais avant de procéder, voici quelques conseils!",
   "confirm.email.having.trouble.tips.one": "Attendez quelques minutes, le courriel n'est peut-être pas encore arrivé dans votre inbox",
-  "confirm.email.having.trouble.tips.two": "Vérifier vos spams",
+  "confirm.email.having.trouble.tips.two": "Vérifier vos indésirables (spams)",
   "confirm.email.having.trouble.tips.three": "Synchronizer votre inbox",
   "confirm.email.retry": "Réenvoyer le courriel de confirmation",
   "confirm.email.sucessful.confirmation.title": "Succès!",
