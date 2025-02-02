@@ -48,7 +48,7 @@ describe('ConfirmEmailComponent', () => {
         },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
-        { provide: PLATFORM_ID, useValue: 'browser' }, // or 'server' for server-side
+        { provide: PLATFORM_ID, useValue: 'browser' },
       ],
     }).compileComponents();
 

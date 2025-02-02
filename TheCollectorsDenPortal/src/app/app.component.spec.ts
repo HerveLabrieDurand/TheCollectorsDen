@@ -1,10 +1,19 @@
+import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { TranslateService } from '@ngx-translate/core';
+import { MessageService } from 'primeng/api';
 import { AppComponent } from './app.component';
+import { mockTranslateService } from './tests/mocks/translateServiceMock';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [
+        { provide: TranslateService, useValue: mockTranslateService },
+        { provide: PLATFORM_ID, useValue: 'browser' },
+        { provide: MessageService, useValue: { add: jest.fn() } },
+      ],
     }).compileComponents();
   });
 
@@ -12,18 +21,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have the 'TheCollectorsDenPortal' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('TheCollectorsDenPortal');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, TheCollectorsDenPortal');
   });
 });

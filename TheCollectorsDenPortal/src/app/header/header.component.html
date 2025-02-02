@@ -10,6 +10,7 @@
       />
     </a>
     <h1
+      data-testid="title"
       class="text-xl font-bold text-light-text dark:text-dark-text md:text-2xl lg:text-3xl xl:text-4xl"
     >
       The Collectors Den
@@ -19,7 +20,7 @@
   <div
     class="ml-auto flex items-center space-x-4 text-light-text dark:text-dark-text"
   >
-    <div *ngIf="showAuthBtns">
+    <div *ngIf="showAuthBtns" data-testid="authButtonsDiv">
       <button
         class="rounded-lg px-4 py-2 focus:outline-none"
         routerLink="login"
