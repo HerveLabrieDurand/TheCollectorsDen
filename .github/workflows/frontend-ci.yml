@@ -5,10 +5,12 @@ on:
     branches: ["main"]
     paths:
       - 'TheCollectorsDenPortal/**'
+      - '.github/workflows/frontend-ci.yml'
   pull_request:
     branches: ["main"]
     paths:
       - 'TheCollectorsDenPortal/**'
+      - '.github/workflows/frontend-ci.yml'
 
 run-name: |
   [TCD.Portal] ${{ github.event.head_commit.message || format('PR #{0} - {1}', github.event.pull_request.number, github.event.pull_request.title) }}
