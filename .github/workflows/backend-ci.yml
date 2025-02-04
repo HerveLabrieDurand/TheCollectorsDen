@@ -15,6 +15,9 @@ jobs:
     env:
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         JWT_EXPIRATION: ${{ secrets.JWT_EXPIRATION }}
+        MAIL_HOST: ${{ secrets.MAIL_HOST }}
+        MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+        MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
 
     services:
       postgres:
