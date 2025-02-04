@@ -14,9 +14,9 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: testdb
-          POSTGRES_USER: testuser
-          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: ${{ secrets.DB_URL }}
+          POSTGRES_USER: ${{ secrets.DB_USERNAME }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
         ports:
           - 5432:5432
         options: >-
@@ -33,13 +33,6 @@ jobs:
         with:
           java-version: '23.0.1'
           distribution: 'oracle'
-
-      - name: Inject environment variables from GitHub Secrets
-        run: |
-          echo "SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
-          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
-          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "ENCODER_SECRET=${{ secrets.ENCODER_SECRET }}" >> $GITHUB_ENV
 
       - name: Wait for PostgreSQL to be ready
         run: |
