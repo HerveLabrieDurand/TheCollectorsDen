@@ -2,15 +2,15 @@ name: TCD.API
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 run-name: |
   [TCD.API] ${{ github.event.head_commit.message || format('PR #{0} - {1}', github.event.pull_request.number, github.event.pull_request.title) }}
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     services:
@@ -34,10 +34,10 @@ jobs:
       - name: Set up JDK 23
         uses: actions/setup-java@v4
         with:
-          java-version: '23.0.1'
-          distribution: 'oracle'
+          java-version: "23.0.1"
+          distribution: "oracle"
 
-      - name: Inject environment variables from GitHub Secrets
+      - name: Inject environment variables
         run: |
           echo "SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/testdb" >> $GITHUB_ENV
           echo "SPRING_DATASOURCE_USERNAME=testuser" >> $GITHUB_ENV
@@ -52,12 +52,11 @@ jobs:
           done
           echo "PostgreSQL did not start in time" && exit 1
 
+      - name: Run Flyway migrations
+        run: mvn flyway:migrate --file TheCollectorsDenAPI/pom.xml
+
       - name: Build with Maven
         run: mvn -B package --file TheCollectorsDenAPI/pom.xml
 
       - name: Run tests with Maven
         run: mvn -B test --file TheCollectorsDenAPI/pom.xml
-
-      # Optional: Upload dependency graph
-      - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
