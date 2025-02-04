@@ -22,7 +22,7 @@ public class EmailConfig {
             @Value("${spring.mail.username:}") String userProp,
             @Value("${spring.mail.password:}") String passwordProp
     ) {
-        // Fallback to environment variables if properties are empty
+        // Fallback to environment variables if properties are empty :)
         this.host = !hostProp.isEmpty() ? hostProp : System.getenv("MAIL_HOST");
         this.user = !userProp.isEmpty() ? userProp : System.getenv("MAIL_USERNAME");
         this.password = !passwordProp.isEmpty() ? passwordProp : System.getenv("MAIL_PASSWORD");
