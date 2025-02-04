@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+run-name: |
+  [TCD.Portal] ${{ github.event.head_commit.message || format('PR #{0} - {1}', github.event.pull_request.number, github.event.pull_request.title) }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
