@@ -5,6 +5,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.core.env.Environment;
@@ -31,9 +32,10 @@ public class JwtService {
      * Caches the jwtSecret instead of fetching it from the environment everytime its needed
      */
     @PostConstruct
-    public void init() {
-        this.jwtSecret = this.environment.getProperty("jwt.secret");
-        this.jwtExpiration = Long.parseLong(Objects.requireNonNull(this.environment.getProperty("jwt.expiration")));
+    public void init(@Value("${JWT_SECRET}") String jwtSecret,
+                     @Value("${JWT_EXPIRATION}") long jwtExpiration) {
+        this.jwtSecret = this.environment.getProperty("jwt.secret") != null ? this.environment.getProperty("jwt.secret") : jwtSecret;
+        this.jwtExpiration = Long.parseLong(Objects.requireNonNull(this.environment.getProperty("jwt.expiration"))) != 0 ? this.jwtExpiration : jwtExpiration;
     }
 
     public String generateToken(UserDetails userDetails) {
