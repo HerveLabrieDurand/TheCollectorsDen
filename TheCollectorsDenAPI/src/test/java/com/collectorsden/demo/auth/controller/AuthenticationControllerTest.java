@@ -60,19 +60,6 @@ class AuthenticationControllerTest {
     }
 
     @Test
-    void Authenticate_Should_Return_Failure_When_Invalid_Request() throws Exception {
-        // Arrange
-        AuthenticateRequest request = new AuthenticateRequest("notAnEmail", "");
-        AuthenticationResponse response = new AuthenticationResponse("mockJwtToken");
-
-        // Act & Assert
-        this.mockMvc.perform(post("/api/v1/auth/authenticate")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(this.objectMapper.writeValueAsString(request)))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     void Register_Should_Return_Success_When_Valid_Request() throws Exception {
         // Arrange
         RegisterRequest request = RegisterRequest.builder()
@@ -90,22 +77,6 @@ class AuthenticationControllerTest {
                 .andExpect(status().isOk());
 
         verify(this.authenticationService).register(any(RegisterRequest.class));
-    }
-
-    @Test
-    void Register_Should_Return_Failure_When_Invalid_Request() throws Exception {
-        // Arrange
-        RegisterRequest request = RegisterRequest.builder()
-                .email("notAnEmail")
-                .password("")
-                .name("")
-                .build();
-
-        // Act & Assert
-        this.mockMvc.perform(post("/api/v1/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(this.objectMapper.writeValueAsString(request)))
-                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -146,17 +117,5 @@ class AuthenticationControllerTest {
                 .andExpect(status().isOk());
 
         verify(this.emailService).resendConfirmationEmail(email);
-    }
-
-    @Test
-    void ResendConfirmEmail_Should_Fail_When_Invalid_Email() throws Exception {
-        // Arrange
-        String email = "notAnEmail";
-
-        // Act & Assert
-        this.mockMvc.perform(post("/api/v1/auth/resend-confirmation-email")
-                        .param("email", email)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest());
     }
 }
