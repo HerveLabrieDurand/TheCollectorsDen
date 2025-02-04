@@ -40,6 +40,9 @@ jobs:
           echo "SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
           echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
           echo "ENCODER_SECRET=${{ secrets.ENCODER_SECRET }}" >> $GITHUB_ENV
+          echo "Spring Datasource Username: ${SPRING_DATASOURCE_USERNAME}"
+          echo "Spring Datasource URL: ${SPRING_DATASOURCE_URL}"
+          echo "Spring Datasource PW: ${SPRING_DATASOURCE_PASSWORD}"
 
       - name: Wait for PostgreSQL to be ready
         run: |
