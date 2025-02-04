@@ -28,31 +28,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK 21
+      - name: Set up JDK 23
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'zulu'
+          java-version: '23.0.1'
+          distribution: 'oracle'
 
       - name: Inject environment variables from GitHub Secrets
-        env:
-          SPRING_DATASOURCE_URL: ${{ secrets.DB_URL }}
-          SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
-          SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          JWT_EXPIRATION: ${{ secrets.JWT_EXPIRATION }}
-          SPRING_MAIL_HOST: ${{ secrets.MAIL_HOST }}
-          SPRING_MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-          SPRING_MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
         run: |
-          echo "SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}" >> $GITHUB_ENV
-          echo "SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}" >> $GITHUB_ENV
-          echo "SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}" >> $GITHUB_ENV
-          echo "JWT_SECRET=${JWT_SECRET}" >> $GITHUB_ENV
-          echo "JWT_EXPIRATION=${JWT_EXPIRATION}" >> $GITHUB_ENV
-          echo "SPRING_MAIL_HOST=${SPRING_MAIL_HOST}" >> $GITHUB_ENV
-          echo "SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME}" >> $GITHUB_ENV
-          echo "SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "ENCODER_SECRET=${{ secrets.ENCODER_SECRET }}" >> $GITHUB_ENV
+          echo "Spring Datasource Username: ${SPRING_DATASOURCE_USERNAME}"
+          echo "Spring Datasource URL: ${SPRING_DATASOURCE_URL}"
+          echo "Spring Datasource PW: ${SPRING_DATASOURCE_PASSWORD}"
 
       - name: Wait for PostgreSQL to be ready
         run: |
