@@ -20,22 +20,26 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private final Environment environment;
     private String jwtSecret;
     private long jwtExpiration;
 
-    public JwtService(Environment environment) {
-        this.environment = environment;
-    }
+    public JwtService(
+            @Value("${jwt.secret:}") String jwtSecretProp,  // Read from properties first
+            @Value("${jwt.expiration:0}") long jwtExpirationProp  // Read from properties first
+    ) {
+        // Use environment variables if properties are empty
+        this.jwtSecret = !jwtSecretProp.isEmpty() ? jwtSecretProp : System.getenv("JWT_SECRET");
+        String expirationStr = System.getenv("JWT_EXPIRATION");
 
-    /*
-     * Caches the jwtSecret instead of fetching it from the environment everytime its needed
-     */
-    @PostConstruct
-    public void init(@Value("${JWT_SECRET}") String jwtSecret,
-                     @Value("${JWT_EXPIRATION}") long jwtExpiration) {
-        this.jwtSecret = this.environment.getProperty("jwt.secret") != null ? this.environment.getProperty("jwt.secret") : jwtSecret;
-        this.jwtExpiration = Long.parseLong(Objects.requireNonNull(this.environment.getProperty("jwt.expiration"))) != 0 ? this.jwtExpiration : jwtExpiration;
+        if (this.jwtSecret == null || this.jwtSecret.isEmpty()) {
+            throw new IllegalStateException("JWT Secret is not set. Check environment variables or application properties.");
+        }
+
+        this.jwtExpiration = jwtExpirationProp != 0 ? jwtExpirationProp : (expirationStr != null ? Long.parseLong(expirationStr) : 0);
+
+        if (this.jwtExpiration == 0) {
+            throw new IllegalStateException("JWT Expiration is not set. Check environment variables or application properties.");
+        }
     }
 
     public String generateToken(UserDetails userDetails) {
