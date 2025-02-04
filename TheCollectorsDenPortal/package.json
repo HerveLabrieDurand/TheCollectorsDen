@@ -68,7 +68,7 @@
   "jest": {
     "preset": "jest-preset-angular",
     "setupFilesAfterEnv": [
-      "/Users/hervelabrie/Documents/PersonalProjects/TheCollectorsDen/TheCollectorsDenPortal/src/setup-jest.ts"
+      "<rootDir>/src/setup-jest.ts"
     ],
     "testMatch": [
       "**/__tests__/**/*.+(ts|tsx|js)",
@@ -78,7 +78,7 @@
       "^.+\\.(ts|js|html)$": [
         "jest-preset-angular",
         {
-          "tsconfig": "/Users/hervelabrie/Documents/PersonalProjects/TheCollectorsDen/TheCollectorsDenPortal/tsconfig.spec.json",
+          "tsconfig": "<rootDir>/tsconfig.spec.json",
           "stringifyContentPathRegex": "\\.html$",
           "isolatedModules": true
         }
