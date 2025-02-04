@@ -36,13 +36,9 @@ jobs:
 
       - name: Inject environment variables from GitHub Secrets
         run: |
-          echo "SPRING_DATASOURCE_URL=${{ secrets.DB_URL }}" >> $GITHUB_ENV
-          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_ENV
-          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
-          echo "ENCODER_SECRET=${{ secrets.ENCODER_SECRET }}" >> $GITHUB_ENV
-          echo "Spring Datasource Username: ${SPRING_DATASOURCE_USERNAME}"
-          echo "Spring Datasource URL: ${SPRING_DATASOURCE_URL}"
-          echo "Spring Datasource PW: ${SPRING_DATASOURCE_PASSWORD}"
+          echo "SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/testdb" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_USERNAME=testuser" >> $GITHUB_ENV
+          echo "SPRING_DATASOURCE_PASSWORD=testpassword" >> $GITHUB_ENV
 
       - name: Wait for PostgreSQL to be ready
         run: |
