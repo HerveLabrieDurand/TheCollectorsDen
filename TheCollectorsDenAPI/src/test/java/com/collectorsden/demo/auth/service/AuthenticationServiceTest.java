@@ -4,6 +4,7 @@ import ch.qos.logback.classic.Level;
 import com.collectorsden.demo.auth.dto.request.AuthenticateRequest;
 import com.collectorsden.demo.auth.dto.request.RegisterRequest;
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
+import com.collectorsden.demo.auth.dto.response.UserDto;
 import com.collectorsden.demo.config.security.JwtService;
 import com.collectorsden.demo.exception.auth.EmailAlreadyInUseException;
 import com.collectorsden.demo.exception.auth.EmailNotConfirmedException;
@@ -11,6 +12,7 @@ import com.collectorsden.demo.exception.auth.InvalidCredentialsException;
 import com.collectorsden.demo.exception.database.DatabaseOperationException;
 import com.collectorsden.demo.model.User;
 import com.collectorsden.demo.model.enums.user.UserRole;
+import com.collectorsden.demo.model.enums.user.UserStatus;
 import com.collectorsden.demo.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.collectorsden.demo.util.LoggerTestUtil;
 import com.collectorsden.demo.util.LoggerTestUtil.TestLogAppender;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,6 +61,7 @@ class AuthenticationServiceTest {
                 .email("user@example.com")
                 .encryptedPassword("encryptedPassword")
                 .emailConfirmed(true)
+                .status(UserStatus.ACTIVE)
                 .role(UserRole.USER)
                 .build();
 
@@ -72,6 +76,8 @@ class AuthenticationServiceTest {
         // Assert
         assertNotNull(response);
         assertEquals("mockJwtToken", response.getAccessToken());
+        assertEquals("user@example.com", response.getUser().getEmail());
+        assertEquals(true, response.user.lastLogin.isAfter(LocalDateTime.now().minusSeconds(5)));
         verify(this.authenticationManagerMock).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(this.userRepositoryMock).findByEmail("user@example.com");
         verify(this.jwtServiceMock).generateToken(user);

@@ -3,6 +3,7 @@ package com.collectorsden.demo.auth.service;
 import com.collectorsden.demo.auth.dto.request.AuthenticateRequest;
 import com.collectorsden.demo.auth.dto.request.RegisterRequest;
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
+import com.collectorsden.demo.auth.dto.response.UserDto;
 import com.collectorsden.demo.config.security.JwtService;
 import com.collectorsden.demo.exception.auth.EmailAlreadyInUseException;
 import com.collectorsden.demo.exception.auth.EmailNotConfirmedException;
@@ -20,6 +21,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -53,6 +56,9 @@ public class AuthenticationService {
                             request.getPassword()
                     )
             );
+
+            user.setLastLogin(LocalDateTime.now());
+            this.userRepository.save(user);
 
             logger.info("User authenticated successfully: {}", user.getEmail());
 
@@ -101,9 +107,27 @@ public class AuthenticationService {
     }
 
     private AuthenticationResponse getAuthenticationResponse(User user) {
+        var userDto = UserDto.builder()
+                .userId(user.getUserId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .country(user.getCountry())
+                .address(user.getAddress())
+                .city(user.getCity())
+                .postalCode(user.getPostalCode())
+                .profilePictureUrl(user.getProfilePictureUrl())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .status(com.collectorsden.demo.auth.dto.response.UserStatus.fromUserStatus(user.getStatus()))
+                .phoneNumber(user.getPhoneNumber())
+                .preferences(user.getPreferences())
+                .lastLogin(user.getLastLogin())
+                .role(com.collectorsden.demo.auth.dto.response.UserRole.fromUserRole(user.getRole()))
+                .build();
         var jwtToken = this.jwtService.generateToken(user);
 
         return AuthenticationResponse.builder()
+                .user(userDto)
                 .accessToken(jwtToken)
                 .build();
     }

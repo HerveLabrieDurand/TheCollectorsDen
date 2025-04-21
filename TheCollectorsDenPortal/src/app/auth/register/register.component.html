@@ -29,11 +29,7 @@
         />
       </button>
 
-      <div
-        *ngIf="openFeatures"
-        class="flex flex-col"
-        data-testid="features"
-      >
+      <div *ngIf="openFeatures" class="flex flex-col" data-testid="features">
         <div
           *ngFor="
             let titleKey of this.featureTitleTranslationKeys;
@@ -60,7 +56,7 @@
         <h2 class="text-sm text-black dark:text-white sm:text-base">
           {{ "register.already.have.account" | translate }}
           <button
-            class="text-light-primary dark:text-dark-primary text-sm underline sm:text-base"
+            class="text-sm text-light-primary underline dark:text-dark-primary sm:text-base"
             (click)="this.navigateToLogin()"
           >
             {{ "register.signin" | translate }}
@@ -87,7 +83,7 @@
         <form
           [formGroup]="this.registerForm"
           (ngSubmit)="this.onSubmit()"
-          class="mt-6 flex min-w-[26rem] max-w-[32rem] flex-col rounded-lg bg-light-container p-4 text-light-text dark:bg-dark-container dark:text-dark-text sm:p-6"
+          class="mt-6 flex min-w-[26rem] max-w-[32rem] flex-col rounded-lg border border-light-border bg-light-container p-4 text-light-text dark:border-dark-border dark:bg-dark-container dark:text-dark-text sm:p-6"
         >
           <!-- Name -->
           <label for="name" class="text-base sm:text-lg">
@@ -97,11 +93,11 @@
             id="name"
             formControlName="name"
             type="text"
-            class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
+            class="focus:border-light-highlight-blue mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
           />
           <div *ngIf="this.registerForm.get('name')?.touched">
             <div
-              class="text-highlight-red mt-1 text-xs"
+              class="mt-1 text-xs text-highlight-red"
               *ngIf="this.registerForm.get('name')?.hasError('required')"
             >
               {{ "validation.field.required" | translate }}
@@ -116,11 +112,11 @@
             id="email"
             formControlName="email"
             type="email"
-            class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
+            class="focus:border-light-highlight-blue mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
           />
           <div *ngIf="this.registerForm.get('email')?.touched">
             <div
-              class="text-highlight-red mt-1 text-xs"
+              class="mt-1 text-xs text-highlight-red"
               *ngIf="
                 this.registerForm.get('email')?.hasError('required');
                 else invalidEmail
@@ -130,7 +126,7 @@
             </div>
             <ng-template #invalidEmail>
               <div
-                class="text-highlight-red mt-1 text-xs"
+                class="mt-1 text-xs text-highlight-red"
                 *ngIf="this.registerForm.get('email')?.hasError('email')"
               >
                 {{ "validation.field.invalidEmail" | translate }}
@@ -146,11 +142,11 @@
             id="password"
             formControlName="password"
             type="password"
-            class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
+            class="focus:border-light-highlight-blue mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
           />
           <div *ngIf="this.registerForm.get('password')?.touched">
             <div
-              class="text-highlight-red mt-1 text-xs"
+              class="mt-1 text-xs text-highlight-red"
               *ngIf="
                 this.registerForm.get('password')?.hasError('required');
                 else invalidPassword
@@ -160,7 +156,7 @@
             </div>
             <ng-template #invalidPassword>
               <div
-                class="text-highlight-red mt-1 text-xs"
+                class="mt-1 text-xs text-highlight-red"
                 *ngIf="
                   this.registerForm.get('password')?.hasError('invalidPassword')
                 "
@@ -181,11 +177,11 @@
                 id="address"
                 formControlName="address"
                 type="text"
-                class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
+                class="focus:border-light-highlight-blue mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
               />
               <div *ngIf="this.registerForm.get('address')?.touched">
                 <div
-                  class="text-highlight-red mt-1 text-xs"
+                  class="mt-1 text-xs text-highlight-red"
                   *ngIf="this.registerForm.get('address')?.hasError('required')"
                 >
                   {{ "validation.field.required" | translate }}
@@ -202,11 +198,11 @@
                 id="city"
                 formControlName="city"
                 type="text"
-                class="mt-2 w-full rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
+                class="focus:border-light-highlight-blue mt-2 w-full rounded-md border border-light-border bg-light-background px-2 py-1 focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
               />
               <div *ngIf="this.registerForm.get('city')?.touched">
                 <div
-                  class="text-highlight-red mt-1 text-xs"
+                  class="mt-1 text-xs text-highlight-red"
                   *ngIf="this.registerForm.get('city')?.hasError('required')"
                 >
                   {{ "validation.field.required" | translate }}
@@ -223,11 +219,11 @@
                 id="country"
                 formControlName="country"
                 type="text"
-                class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
+                class="focus:border-light-highlight-blue mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
               />
               <div *ngIf="this.registerForm.get('country')?.touched">
                 <div
-                  class="text-highlight-red mt-1 text-xs"
+                  class="mt-1 text-xs text-highlight-red"
                   *ngIf="this.registerForm.get('country')?.hasError('required')"
                 >
                   {{ "validation.field.required" | translate }}
@@ -244,11 +240,11 @@
                 id="postalCode"
                 formControlName="postalCode"
                 type="text"
-                class="mt-2 w-full rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
+                class="focus:border-light-highlight-blue mt-2 w-full rounded-md border border-light-border bg-light-background px-2 py-1 focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
               />
               <div *ngIf="this.registerForm.get('postalCode')?.touched">
                 <div
-                  class="text-highlight-red mt-1 text-xs"
+                  class="mt-1 text-xs text-highlight-red"
                   *ngIf="
                     this.registerForm.get('postalCode')?.hasError('required');
                     else invalidPostalCode
@@ -258,7 +254,7 @@
                 </div>
                 <ng-template #invalidPostalCode>
                   <div
-                    class="text-highlight-red mt-1 text-xs"
+                    class="mt-1 text-xs text-highlight-red"
                     *ngIf="
                       this.registerForm
                         .get('postalCode')
@@ -280,11 +276,11 @@
             id="phoneNumber"
             formControlName="phoneNumber"
             type="tel"
-            class="mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:border-light-highlight-blue focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
+            class="focus:border-light-highlight-blue mt-2 rounded-md border border-light-border bg-light-background px-2 py-1 focus:outline-none focus:ring dark:border-dark-border dark:bg-dark-background"
           />
           <div *ngIf="this.registerForm.get('phoneNumber')?.touched">
             <div
-              class="text-highlight-red mt-1 text-xs"
+              class="mt-1 text-xs text-highlight-red"
               *ngIf="
                 this.registerForm.get('phoneNumber')?.hasError('required');
                 else invalidPhoneNumber
@@ -294,7 +290,7 @@
             </div>
             <ng-template #invalidPhoneNumber>
               <div
-                class="text-highlight-red mt-1 text-xs"
+                class="mt-1 text-xs text-highlight-red"
                 *ngIf="
                   this.registerForm
                     .get('phoneNumber')
@@ -310,7 +306,7 @@
           <button
             data-testid="submit-button"
             type="submit"
-            class="bg-light-primary dark:bg-dar mt-6 flex items-center justify-center rounded-lg p-3 text-light-text dark:text-dark-text"
+            class="dark:bg-dar mt-6 flex items-center justify-center rounded-lg bg-light-primary p-3 text-light-text dark:text-dark-text"
             [disabled]="this.registerForm.invalid"
           >
             {{ "register.submit" | translate }}

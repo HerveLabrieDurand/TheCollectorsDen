@@ -3,6 +3,9 @@ package com.collectorsden.demo.auth.controller;
 import com.collectorsden.demo.auth.dto.request.AuthenticateRequest;
 import com.collectorsden.demo.auth.dto.request.RegisterRequest;
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
+import com.collectorsden.demo.auth.dto.response.UserDto;
+import com.collectorsden.demo.auth.dto.response.UserRole;
+import com.collectorsden.demo.auth.dto.response.UserStatus;
 import com.collectorsden.demo.auth.service.AuthenticationService;
 import com.collectorsden.demo.auth.service.EmailService;
 import com.collectorsden.demo.model.User;
@@ -15,6 +18,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -45,7 +50,8 @@ class AuthenticationControllerTest {
     void Authenticate_Should_Return_AuthenticationResponse_When_Valid_Request() throws Exception {
         // Arrange
         AuthenticateRequest request = new AuthenticateRequest("user@example.com", "password123");
-        AuthenticationResponse response = new AuthenticationResponse("mockJwtToken");
+
+        AuthenticationResponse response = new AuthenticationResponse(new UserDto(), "mockJwtToken");
 
         when(this.authenticationService.authenticate(any(AuthenticateRequest.class))).thenReturn(response);
 
