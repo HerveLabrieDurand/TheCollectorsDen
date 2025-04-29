@@ -10,6 +10,7 @@ import { ApiService } from '../api/api.service';
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly USER_KEY = 'currentUser';
   private readonly TOKEN_KEY = 'jwt';
   private userSubject = new BehaviorSubject<UserDto | null>(null);
   user$ = this.userSubject.asObservable();
@@ -18,7 +19,23 @@ export class AuthService {
     private apiService: ApiService,
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
-    this.loadUserFromServer();
+    this.restoreSession();
+  }
+
+  private restoreSession() {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    const token = this.getToken();
+    const userJson = sessionStorage.getItem(this.USER_KEY);
+
+    if (token && userJson) {
+      try {
+        const user: UserDto = JSON.parse(userJson);
+        this.userSubject.next(user);
+      } catch (e) {
+        this.clearUser(); // corrupted user object
+      }
+    }
   }
 
   authenticate(request: AuthenticateRequest) {
@@ -68,30 +85,20 @@ export class AuthService {
 
   setUser(user: UserDto): void {
     this.userSubject.next(user);
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    }
   }
 
   clearUser(): void {
-    this.removeToken();
     this.userSubject.next(null);
+    if (isPlatformBrowser(this.platformId)) {
+      sessionStorage.removeItem(this.TOKEN_KEY);
+      sessionStorage.removeItem(this.USER_KEY);
+    }
   }
 
   getCurrentUser(): UserDto | null {
     return this.userSubject.value;
-  }
-
-  /**
-   * Loads the current user from the backend if a token is present.
-   * Should be called automatically on service construction.
-   */
-  private loadUserFromServer(): void {
-    const token = this.getToken();
-    if (!token) {
-      return;
-    }
-
-    this.apiService.get<UserDto>('auth/me').subscribe({
-      next: (user) => this.setUser(user),
-      error: () => this.clearUser(),
-    });
   }
 }

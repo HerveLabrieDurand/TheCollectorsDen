@@ -1,5 +1,6 @@
 package com.collectorsden.demo.auth.dto.response;
 
+import com.collectorsden.demo.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,4 +28,24 @@ public class UserDto {
     public String preferences; // stored as json
     public LocalDateTime lastLogin;
     public UserRole role;
+
+    public static UserDto fromUser(User user) {
+        return UserDto.builder()
+                .userId(user.getUserId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .country(user.getCountry())
+                .address(user.getAddress())
+                .city(user.getCity())
+                .postalCode(user.getPostalCode())
+                .profilePictureUrl(user.getProfilePictureUrl())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .status(com.collectorsden.demo.auth.dto.response.UserStatus.fromUserStatus(user.getStatus()))
+                .phoneNumber(user.getPhoneNumber())
+                .preferences(user.getPreferences())
+                .lastLogin(user.getLastLogin())
+                .role(com.collectorsden.demo.auth.dto.response.UserRole.fromUserRole(user.getRole()))
+                .build();
+    }
 }

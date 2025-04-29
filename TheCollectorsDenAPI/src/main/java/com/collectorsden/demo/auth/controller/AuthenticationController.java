@@ -3,6 +3,7 @@ package com.collectorsden.demo.auth.controller;
 import com.collectorsden.demo.auth.dto.request.AuthenticateRequest;
 import com.collectorsden.demo.auth.dto.request.RegisterRequest;
 import com.collectorsden.demo.auth.dto.response.AuthenticationResponse;
+import com.collectorsden.demo.auth.dto.response.UserDto;
 import com.collectorsden.demo.auth.service.AuthenticationService;
 import com.collectorsden.demo.auth.service.EmailService;
 import com.collectorsden.demo.model.ConfirmationToken;
@@ -16,8 +17,15 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.attribute.UserPrincipal;
 
 @RestController
 @RequestMapping("/api/v1/auth")
