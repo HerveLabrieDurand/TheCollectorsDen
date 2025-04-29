@@ -1,3 +1,6 @@
+import { UserRole } from './userRole';
+import { UserStatus } from './userStatus';
+
 export interface UserDto {
   userId: number;
   name: string;
@@ -7,7 +10,7 @@ export interface UserDto {
   city: string;
   postalCode: string;
   phoneNumber: string;
-  preferences: string
+  preferences: string;
   profilePictureUrl: string;
   createdAt: string;
   updatedAt: string;

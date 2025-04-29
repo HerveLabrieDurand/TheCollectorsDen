@@ -1,28 +1,31 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject, tap } from 'rxjs';
 import { AuthenticateRequest } from '../../dto/auth/authenticateRequest';
 import { RegisterRequest } from '../../dto/auth/registerRequest';
+import { UserDto } from '../../dto/auth/userDto';
 import { ApiService } from '../api/api.service';
-import { UserDto } from '../../dto/auth/UserDto';
-import { BehaviorSubject, tap } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(
-    private apiService: ApiService,
-    @Inject(PLATFORM_ID) private platformId: any,
-  ) {}
-
   private readonly TOKEN_KEY = 'jwt';
   private userSubject = new BehaviorSubject<UserDto | null>(null);
   user$ = this.userSubject.asObservable();
+
+  constructor(
+    private apiService: ApiService,
+    @Inject(PLATFORM_ID) private platformId: any,
+  ) {
+    this.loadUserFromServer();
+  }
 
   authenticate(request: AuthenticateRequest) {
     return this.apiService.post('auth/authenticate', request).pipe(
       tap((response: any) => {
         this.saveToken(response.token);
-        this.setUser(response.user); // Assuming the response contains user data
+        this.setUser(response.user);
       }),
     );
   }
@@ -46,10 +49,9 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    if (isPlatformBrowser(this.platformId)) {
-      return sessionStorage.getItem(this.TOKEN_KEY);
-    }
-    return null;
+    return isPlatformBrowser(this.platformId)
+      ? sessionStorage.getItem(this.TOKEN_KEY)
+      : null;
   }
 
   saveToken(token: string): void {
@@ -61,7 +63,6 @@ export class AuthService {
   removeToken(): void {
     if (isPlatformBrowser(this.platformId)) {
       sessionStorage.removeItem(this.TOKEN_KEY);
-      this.clearUser();
     }
   }
 
@@ -70,10 +71,27 @@ export class AuthService {
   }
 
   clearUser(): void {
+    this.removeToken();
     this.userSubject.next(null);
   }
 
   getCurrentUser(): UserDto | null {
     return this.userSubject.value;
+  }
+
+  /**
+   * Loads the current user from the backend if a token is present.
+   * Should be called automatically on service construction.
+   */
+  private loadUserFromServer(): void {
+    const token = this.getToken();
+    if (!token) {
+      return;
+    }
+
+    this.apiService.get<UserDto>('auth/me').subscribe({
+      next: (user) => this.setUser(user),
+      error: () => this.clearUser(),
+    });
   }
 }

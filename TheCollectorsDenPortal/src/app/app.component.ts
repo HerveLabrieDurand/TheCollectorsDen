@@ -1,22 +1,32 @@
-import { isPlatformBrowser } from '@angular/common';
+import { AsyncPipe, isPlatformBrowser, NgIf } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastModule } from 'primeng/toast';
 import translationsEN from '../../public/i18n/en.json';
 import translationsFR from '../../public/i18n/fr.json';
-import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.component";
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { AuthService } from './services/auth/auth.service';
+import { SidePanelComponent } from './side-panel/side-panel.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ToastModule, LoadingSpinnerComponent],
+  imports: [
+    RouterOutlet,
+    ToastModule,
+    LoadingSpinnerComponent,
+    SidePanelComponent,
+    NgIf,
+    AsyncPipe,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'TheCollectorsDenPortal';
   constructor(
+    public authService: AuthService,
     private translate: TranslateService,
     @Inject(PLATFORM_ID) private platformId: object,
   ) {

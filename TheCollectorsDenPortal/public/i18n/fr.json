@@ -89,6 +89,16 @@
   "register.features.dashboard.description": "Visualisez commandes, historique et statistiques pour optimiser vos ventes.",
   "register.features.forum.description": "Participez aux discussions et gagnez des badges pour vos contributions.",
 
+  "sidepanel.tabs.overview.label": "Vue d'ensemble",
+  "sidepanel.tabs.search.discover.label": "Recherche & Découverte",
+  "sidepanel.tabs.orders.payments.label": "Commandes & Paiements",
+  "sidepanel.tabs.selling.bidding.label": "Vente & Enchères",
+  "sidepanel.tabs.reviews.ratings.label": "Avis & Notes",
+  "sidepanel.tabs.delivery.tracking.label": "Suivi de Livraison",
+  "sidepanel.tabs.activity.insights.label": "Activité & Analyses",
+  "sidepanel.tabs.community.label": "Communauté",
+  "sidepanel.tabs.account.settings.label": "Paramètres du Compte",
+
   "validation.field.required": "Ce champ est requis.",
   "validation.field.invalidEmail": "Cette adresse e-mail est invalide.",
   "validation.field.invalidPassword": "Exigences: un caractère spécial, une lettre majuscule, une lettre minuscule, un chiffre, taille minimale de 8.",

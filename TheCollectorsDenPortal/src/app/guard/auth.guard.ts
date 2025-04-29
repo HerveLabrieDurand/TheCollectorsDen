@@ -19,6 +19,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const token = authService.getToken();
 
   if (!token) {
+    authService.clearUser();
     router.navigate(['login']);
     messageService.add({
       severity: 'error',
@@ -35,7 +36,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   return apiService.get('token/validation/validate-token').pipe(
     map(() => true), // Token is validated by backend, allow access
     catchError(() => {
-      authService.removeToken();
+      authService.clearUser();
       router.navigate(['login']);
       messageService.add({
         severity: 'error',

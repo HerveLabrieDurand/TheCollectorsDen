@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
       this.authService.authenticate(authenticateRequest).subscribe({
         next: (response: any) => {
           this.loadingService.hide();
-          this.authService.setUser()
+          this.authService.setUser(response.user);
           this.authService.saveToken(response.accessToken);
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['overview']);
           this.messageService.add({
             severity: 'success',
             summary: this.translateService.instant('login.success.toast.title'),

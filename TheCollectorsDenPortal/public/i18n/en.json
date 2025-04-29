@@ -89,6 +89,16 @@
   "register.features.dashboard.description": "Track orders, review history, and view statistics to boost sales.",
   "register.features.forum.description": "Join discussions, exchange tips, and earn badges for active participation.",
 
+  "sidepanel.tabs.overview.label": "Overview",
+  "sidepanel.tabs.search.discover.label": "Search & Discover",
+  "sidepanel.tabs.orders.payments.label": "Orders & Payments",
+  "sidepanel.tabs.selling.bidding.label": "Selling & Bidding",
+  "sidepanel.tabs.reviews.ratings.label": "Reviews & Ratings",
+  "sidepanel.tabs.delivery.tracking.label": "Delivery Tracking",
+  "sidepanel.tabs.activity.insights.label": "Activity & Insights",
+  "sidepanel.tabs.community.label": "Community",
+  "sidepanel.tabs.account.settings.label": "Account Settings",
+
   "validation.field.required": "This field is required.",
   "validation.field.invalidEmail": "This email address is invalid.",
   "validation.field.invalidPassword": "Requirements: one special character, one uppercase, one lowercase, one digit, minimal length of 8 characters",

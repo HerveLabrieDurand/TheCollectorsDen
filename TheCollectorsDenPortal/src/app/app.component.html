@@ -1,5 +1,14 @@
 <div class="flex flex-col">
   <p-toast></p-toast>
   <app-loading-spinner></app-loading-spinner>
-  <router-outlet></router-outlet>
+
+  <div class="flex min-h-screen flex-row">
+    <ng-container *ngIf="authService.user$ | async">
+      <app-side-panel></app-side-panel>
+    </ng-container>
+
+    <div class="flex-1">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

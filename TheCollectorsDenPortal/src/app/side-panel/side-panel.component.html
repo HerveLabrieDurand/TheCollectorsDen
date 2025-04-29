@@ -1,0 +1,22 @@
+<div
+  class="flex min-h-screen w-80 flex-col items-center space-y-6 border-r border-light-border bg-light-background py-6 font-dynapuf text-light-text dark:border-dark-border dark:bg-dark-background dark:text-dark-text"
+>
+  <!-- Logo -->
+  <img src="/img/logo.svg" alt="Logo" class="h-28 w-28" />
+
+  <!-- Tabs -->
+  <nav class="flex w-full flex-col space-y-2">
+    <a
+      *ngFor="let tab of tabs"
+      [routerLink]="tab.route"
+      routerLinkActive="bg-light-primary dark:bg-dark-primary"
+      class="mx-4 flex items-center gap-5 rounded-lg px-6 py-3 transition-all duration-300 hover:scale-[1.04] hover:underline"
+    >
+      <ng-icon
+        [name]="tab.icon"
+        class="scale-[2.0] text-light-text dark:text-dark-text"
+      ></ng-icon>
+      {{ tab.label | translate }}
+    </a>
+  </nav>
+</div>

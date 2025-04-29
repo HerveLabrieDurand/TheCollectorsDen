@@ -81,7 +81,7 @@ describe('LoginComponent', () => {
     expect(authService.authenticate).toHaveBeenCalledWith(validFormData);
     expect(loadingService.show).toHaveBeenCalled();
     expect(loadingService.hide).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalledWith(['dashboard']);
+    expect(router.navigate).toHaveBeenCalledWith(['overview']);
     expect(messageService.add).toHaveBeenCalledWith({
       severity: 'success',
       summary: 'login.success.toast.title',
