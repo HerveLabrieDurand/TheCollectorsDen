@@ -1,3 +1,4 @@
+import { provideHttpClient } from '@angular/common/http';
 import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,6 +11,7 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
+        provideHttpClient(),
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: MessageService, useValue: { add: jest.fn() } },
