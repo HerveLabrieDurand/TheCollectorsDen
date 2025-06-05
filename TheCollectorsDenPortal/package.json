@@ -8,8 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "serve:ssr:TheCollectorsDenPortal": "node dist/the-collectors-den-portal/server/server.mjs"
+    "test:coverage": "jest --coverage"
   },
   "private": true,
   "dependencies": {
@@ -22,9 +21,7 @@
     "@angular/material": "^19.1.0",
     "@angular/platform-browser": "^19.1.0",
     "@angular/platform-browser-dynamic": "^19.1.0",
-    "@angular/platform-server": "^19.1.0",
     "@angular/router": "^19.1.0",
-    "@angular/ssr": "^19.1.1",
     "@ng-icons/core": "^30.2.0",
     "@ng-icons/heroicons": "^30.2.0",
     "@ng-icons/material-icons": "^30.2.0",
