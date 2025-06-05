@@ -8,6 +8,7 @@ import translationsFR from '../../public/i18n/fr.json';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { AuthService } from './services/auth/auth.service';
 import { SidePanelComponent } from './side-panel/side-panel.component';
+import { SearchBarComponent } from "./search-bar/search-bar.component";
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ import { SidePanelComponent } from './side-panel/side-panel.component';
     SidePanelComponent,
     NgIf,
     AsyncPipe,
-  ],
+    SearchBarComponent
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
