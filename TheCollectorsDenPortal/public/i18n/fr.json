@@ -106,5 +106,6 @@
   "validation.field.invalidPostalCode": "Ce code postal est invalide.",
 
   "welcome.title": "Un paradis pour les collectionneurs vous attend!",
-  "welcome.subtitle": "The Collectors Den est votre marché de confiance pour des trésors rares et des objets de collection du quotidien"
+  "welcome.subtitle": "The Collectors Den est votre place de marché de confiance pour des trésors rares et des objets de collection quotidiens",
+  "searchbar.input.placeholder": "Rechercher"
 }

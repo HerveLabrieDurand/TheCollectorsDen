@@ -106,5 +106,6 @@
   "validation.field.invalidPostalCode": "This postal code is invalid.",
 
   "welcome.title": "A Collector’s Paradise Awaits - Discover, Trade, and Treasure!",
-  "welcome.subtitle": "The Collectors Den is your Trusted Marketplace for Rare Treasures and Everyday Collectibles"
+  "welcome.subtitle": "The Collectors Den is your Trusted Marketplace for Rare Treasures and Everyday Collectibles",
+  "searchbar.input.placeholder": "Search"
 }
