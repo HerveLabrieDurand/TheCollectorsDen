@@ -41,9 +41,6 @@
   "header.signin": "Sign In",
   "header.signup": "Sign Up",
 
-  "header.settings.language.english": "English",
-  "header.settings.language.french": "French",
-
   "login.create.account": "Create an account",
   "login.email.input.label": "Email address",
   "login.new.user": "New to The Collectors Den ?",
@@ -88,6 +85,11 @@
   "register.features.delivery.description": "Manage delivery addresses, options, and track shipments effortlessly.",
   "register.features.dashboard.description": "Track orders, review history, and view statistics to boost sales.",
   "register.features.forum.description": "Join discussions, exchange tips, and earn badges for active participation.",
+
+  "settings.language.english": "English",
+  "settings.language.french": "French",
+  "settings.toggleTheme": "Toggle Theme",
+  "settings.logout": "Logout",
 
   "sidepanel.tabs.overview.label": "Overview",
   "sidepanel.tabs.search.discover.label": "Search & Discover",

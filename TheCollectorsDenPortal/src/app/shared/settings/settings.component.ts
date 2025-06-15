@@ -3,9 +3,11 @@ import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { Router } from '@angular/router';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { matSettingsOutline } from '@ng-icons/material-icons/outline';
+import { matLogoutOutline, matSettingsOutline } from '@ng-icons/material-icons/outline';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-settings',
@@ -20,12 +22,23 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
   ],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css',
-  viewProviders: [provideIcons({ matSettingsOutline })],
+  viewProviders: [provideIcons({ matSettingsOutline, matLogoutOutline })],
 })
 export class SettingsComponent {
   constructor(
     private translate: TranslateService,
+    private authService: AuthService,
+    private router: Router
   ) {}
+
+  get isLoggedIn(): boolean {
+    return this.authService.getCurrentUser() !== null;
+  }
+
+  logout(): void {
+    this.authService.clearUser();
+    this.router.navigate(['/']);
+  }
 
   getLang() {
     return localStorage.getItem('fav-lang');

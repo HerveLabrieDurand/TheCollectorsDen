@@ -41,9 +41,6 @@
   "header.signin": "Se connecter",
   "header.signup": "S'inscrire",
 
-  "header.settings.language.english": "Anglais",
-  "header.settings.language.french": "Français",
-
   "login.create.account": "Créer un compte",
   "login.email.input.label": "Adresse e-mail",
   "login.new.user": "Vous êtes nouveau sur The Collectors Den ?",
@@ -88,6 +85,11 @@
   "register.features.delivery.description": "Suivez vos livraisons facilement et gérez vos adresses rapidement.",
   "register.features.dashboard.description": "Visualisez commandes, historique et statistiques pour optimiser vos ventes.",
   "register.features.forum.description": "Participez aux discussions et gagnez des badges pour vos contributions.",
+
+  "settings.language.english": "Anglais",
+  "settings.language.french": "Français",
+  "settings.toggleTheme": "Changer de thème",
+  "settings.logout": "Déconnexion",
 
   "sidepanel.tabs.overview.label": "Vue d'ensemble",
   "sidepanel.tabs.search.discover.label": "Recherche & Découverte",

@@ -10,15 +10,20 @@
 <mat-menu #menu="matMenu">
   <button mat-menu-item (click)="toggleTheme()">
     <mat-icon>brightness_6</mat-icon>
-    <span>Toggle Theme</span>
+    <span>{{ 'settings.toggleTheme' | translate }}</span>
   </button>
   <button mat-menu-item (click)="toggleLocale()">
     <mat-icon>translate</mat-icon>
     <span *ngIf="getLang() === 'en'">{{
-      "header.settings.language.french" | translate
+      "settings.language.french" | translate
     }}</span>
     <span *ngIf="getLang() === 'fr'">{{
-      "header.settings.language.english" | translate
+      "settings.language.english" | translate
     }}</span>
+  </button>
+  
+  <button *ngIf="isLoggedIn" mat-menu-item (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    <span>{{ "settings.logout" | translate }}</span>
   </button>
 </mat-menu>
