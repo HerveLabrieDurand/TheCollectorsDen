@@ -4,7 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
 import { matSettingsOutline } from '@ng-icons/material-icons/outline';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingsComponent } from '../shared/settings/settings.component';
 
 @Component({
   selector: 'app-header',

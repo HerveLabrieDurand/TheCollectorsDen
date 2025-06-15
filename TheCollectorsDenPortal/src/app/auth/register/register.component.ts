@@ -16,9 +16,9 @@ import {
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { MessageService } from 'primeng/api';
 import { RegisterRequest } from '../../dto/auth/registerRequest';
-import { SettingsComponent } from '../../header/settings/settings.component';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoadingService } from '../../services/loading/loading.service';
+import { SettingsComponent } from '../../shared/settings/settings.component';
 import {
   passwordValidator,
   phoneNumberValidator,
