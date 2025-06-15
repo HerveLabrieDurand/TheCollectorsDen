@@ -35,7 +35,8 @@ describe('LoginComponent', () => {
           useValue: {
             authenticate: jest.fn(() => of({})),
             saveToken: jest.fn(),
-            setUser: jest.fn()
+            setUser: jest.fn(),
+            getCurrentUser: jest.fn(() => null)
           },
         },
         { provide: MessageService, useValue: { add: jest.fn() } },

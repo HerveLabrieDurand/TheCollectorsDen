@@ -1,5 +1,7 @@
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '../services/auth/auth.service';
 import { SearchBarComponent } from './search-bar.component';
 
 describe('SearchBarComponent', () => {
@@ -8,9 +10,17 @@ describe('SearchBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SearchBarComponent]
-    })
-    .compileComponents();
+      imports: [SearchBarComponent, TranslateModule.forRoot()],
+      providers: [
+        provideHttpClientTesting(),
+        {
+          provide: AuthService,
+          useValue: {
+            getCurrentUser: jest.fn(() => null),
+          },
+        },
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SearchBarComponent);
     component = fixture.componentInstance;

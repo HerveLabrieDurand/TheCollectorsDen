@@ -18,9 +18,9 @@ import { screen } from '@testing-library/angular';
 import '@testing-library/jest-dom';
 import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { SettingsComponent } from '../../header/settings/settings.component';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoadingService } from '../../services/loading/loading.service';
+import { SettingsComponent } from '../../shared/settings/settings.component';
 import { mockTranslateService } from '../../tests/mocks/translateServiceMock';
 import { RegisterComponent } from './register.component';
 
@@ -48,6 +48,7 @@ describe('RegisterComponent', () => {
           provide: AuthService,
           useValue: {
             register: jest.fn(() => of({})),
+            getCurrentUser: jest.fn(() => null),
           },
         },
         { provide: MessageService, useValue: { add: jest.fn() } },

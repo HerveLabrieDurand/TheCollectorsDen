@@ -39,6 +39,7 @@ describe('ConfirmEmailComponent', () => {
           useValue: {
             resendConfirmationEmail: jest.fn(() => of({})),
             confirmEmail: jest.fn(() => of({})),
+            getCurrentUser: jest.fn(() => null),
           },
         },
         { provide: MessageService, useValue: { add: jest.fn() } },

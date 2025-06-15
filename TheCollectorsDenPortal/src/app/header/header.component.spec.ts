@@ -7,7 +7,8 @@ import { mockActivatedRoute } from '../tests/mocks/mockActivatedRoute';
 import { mockRouter } from '../tests/mocks/mockRouter';
 import { mockTranslateService } from '../tests/mocks/translateServiceMock';
 import { HeaderComponent } from './header.component';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingsComponent } from '../shared/settings/settings.component';
+import { AuthService } from '../services/auth/auth.service';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -22,6 +23,12 @@ describe('HeaderComponent', () => {
         { provide: Router, useValue: mockRouter },
         { provide: TranslateService, useValue: mockTranslateService },
         { provide: ActivatedRoute, useValue: mockActivatedRoute },
+        {
+          provide: AuthService,
+          useValue: {
+            getCurrentUser: jest.fn(() => null),
+          },
+        },
       ],
     }).compileComponents();
 
