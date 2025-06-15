@@ -1,5 +1,5 @@
-import { isPlatformBrowser, NgIf } from '@angular/common';
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -25,15 +25,10 @@ import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 export class SettingsComponent {
   constructor(
     private translate: TranslateService,
-    @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
   getLang() {
-    if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('fav-lang');
-    } else {
-      return 'en';
-    }
+    return localStorage.getItem('fav-lang');
   }
 
   toggleTheme() {

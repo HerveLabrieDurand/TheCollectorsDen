@@ -88,7 +88,7 @@ describe('ConfirmEmailComponent', () => {
     expect(messageService.add).not.toHaveBeenCalled();
   });
 
-  it('should confirm email when token is present and platform is browser', () => {
+  it('should confirm email when token is present', () => {
     // Mock token presence BEFORE component initialization
     mockActivatedRoute.snapshot.queryParamMap = {
       get: jest.fn().mockReturnValue('valid-token'),

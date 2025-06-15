@@ -1,5 +1,5 @@
-import { isPlatformBrowser, NgFor, NgIf } from '@angular/common';
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -41,7 +41,6 @@ export class ConfirmEmailComponent implements OnInit {
     private messageService: MessageService,
     private translateService: TranslateService,
     private loadingService: LoadingService,
-    @Inject(PLATFORM_ID) private platformId: object,
   ) {}
 
   tipsBeforeResend: string[] = [
@@ -53,7 +52,7 @@ export class ConfirmEmailComponent implements OnInit {
   ngOnInit(): void {
     const token = this.route.snapshot.queryParamMap.get('token');
 
-    if (token && isPlatformBrowser(this.platformId)) {
+    if (token) {
       this.authService.confirmEmail(token).subscribe({
         next: () => {
           this.router.navigate(['']);

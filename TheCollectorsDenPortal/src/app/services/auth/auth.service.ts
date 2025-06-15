@@ -1,4 +1,3 @@
-import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, tap } from 'rxjs';
 import { AuthenticateRequest } from '../../dto/auth/authenticateRequest';
@@ -17,14 +16,11 @@ export class AuthService {
 
   constructor(
     private apiService: ApiService,
-    @Inject(PLATFORM_ID) private platformId: any,
   ) {
     this.restoreSession();
   }
 
   private restoreSession() {
-    if (!isPlatformBrowser(this.platformId)) return;
-
     const token = this.getToken();
     const userJson = sessionStorage.getItem(this.USER_KEY);
 
@@ -66,36 +62,26 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    return isPlatformBrowser(this.platformId)
-      ? sessionStorage.getItem(this.TOKEN_KEY)
-      : null;
+    return sessionStorage.getItem(this.TOKEN_KEY)
   }
 
   saveToken(token: string): void {
-    if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.setItem(this.TOKEN_KEY, token);
-    }
+    sessionStorage.setItem(this.TOKEN_KEY, token);
   }
 
   removeToken(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.removeItem(this.TOKEN_KEY);
-    }
+    sessionStorage.removeItem(this.TOKEN_KEY);
   }
 
   setUser(user: UserDto): void {
     this.userSubject.next(user);
-    if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
-    }
+    sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }
 
   clearUser(): void {
     this.userSubject.next(null);
-    if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.removeItem(this.TOKEN_KEY);
-      sessionStorage.removeItem(this.USER_KEY);
-    }
+    sessionStorage.removeItem(this.TOKEN_KEY);
+    sessionStorage.removeItem(this.USER_KEY);
   }
 
   getCurrentUser(): UserDto | null {
